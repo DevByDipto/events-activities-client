@@ -1,5 +1,5 @@
-import React, { useCallback, useState, createContext, useContext } from 'react'
-import { User, AuthContextType } from '../types'
+import React, { useCallback, useState, createContext, useContext, ReactNode } from 'react'
+import { User, AuthContextType } from '../types/index'
 import { mockUsers } from '../utils/mockData'
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 interface AuthProviderProps {

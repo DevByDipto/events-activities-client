@@ -1,9 +1,10 @@
+import { HomePage } from '@/components/modules/home/HomePage'
 import React from 'react'
 
-const HeroPage = () => {
+const home = () => {
   return (
-    <div>HeroPage</div>
+    <div><HomePage/></div>
   )
 }
 
-export default HeroPage
+export default home
