@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCookie } from "../auth/tokenHandlers";
 
 // utils/eventJoining.ts
@@ -21,10 +22,9 @@ const eventJoining = async (eventId: string) => {
 
     const data = await response.json();
     return data;
-  } catch (error) {
-    console.error('Error joining event:', error);
-    throw error;
-  }
+  } catch (error: any) {
+     return { success: false, message: error.message };
+   }
 };
 
 export default eventJoining;

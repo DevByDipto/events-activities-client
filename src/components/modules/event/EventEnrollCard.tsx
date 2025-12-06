@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { fatchFunction } from '@/services/event/eventDetails';
 import eventJoining from '@/services/event/eventJoning';
+import leaveEvent from '@/services/event/leaveEvent';
 import { CheckCircle, XCircle } from 'lucide-react'
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -42,12 +43,13 @@ import { toast } from 'sonner';
   await setIsJoining(false);
     }
     fetchData()
-  },[isJoining])
+  },[isJoining,isLeaving])
   const handleLeave = async () => {
     setIsLeaving(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const resutl = await leaveEvent(id)
     setIsLeaving(false);
-    alert("Successfully left the event");
+    fatchFunction(id)
+    toast.success("Successfully left the event")
   };
      return (
        <div>

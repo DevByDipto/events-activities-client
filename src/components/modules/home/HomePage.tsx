@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
-import React, { memo, useEffect, useState } from 'react'
+// 'use client'
+// import React, { memo, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -28,20 +28,19 @@ import { EventCard } from '../../shared/EventCard'
 import { mockEvents, mockUsers, mockReviews } from '../../../utils/mockData'
 import allEvents from '@/services/event/allEvents'
 
-export function HomePage() { 
-  const [events, setEvent] = useState<any>(null);
+export async function HomePage() { 
+  // const [events, setEvent] = useState<any>(null);
 // console.log("events",events);
 
-  useEffect(() => {
-    const fetcEvent = async () => {
-      const data = await allEvents();
-      setEvent(data);
-    };
+  // useEffect(() => {
+  //   const fetcEvent = async () => {
+      const events = await allEvents();
+  //     setEvent(data);
+  //   };
 
-    fetcEvent();
-  }, []);
-  const featuredEvents = events
-    ?.filter((e) => e.isFeatured && e.status === 'OPEN')
+  //   fetcEvent();
+  // }, []);
+  const featuredEvents = events?.filter((e) => e.isFeatured && e.status === 'OPEN')
     .slice(0, 6)
 
   const topHosts = mockUsers

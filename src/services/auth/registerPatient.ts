@@ -15,6 +15,7 @@ const registerValidationZodSchema = z.object({
     confirmPassword: z.string().min(6, {
         error: "Confirm Password is required and must be at least 6 characters long",
     }),
+    role: z.enum(["USER", "HOST"]).default("USER"),
 }).refine((data: any) => data.password === data.confirmPassword, {
     error: "Passwords do not match",
     path: ["confirmPassword"],
@@ -23,11 +24,15 @@ const registerValidationZodSchema = z.object({
 
 export const registerPatient = async (_currentState: any, formData: any): Promise<any> => {
     try {
+        const becomeHost = formData.get("becomeHost"); // "HOST" or null
+
+const role = becomeHost ? "HOST" : "USER";
         const validationData = {
             name: formData.get('name'),
             email: formData.get('email'),
             password: formData.get('password'),
             confirmPassword: formData.get('confirmPassword'),
+            role: role
         }
 
         const validatedFields = registerValidationZodSchema.safeParse(validationData);
@@ -51,11 +56,12 @@ export const registerPatient = async (_currentState: any, formData: any): Promis
                 name: formData.get('name'),
                 email: formData.get('email'),
                  password: formData.get('password'),
+                 role: role
         }
 
-        const newFormData = new FormData();
+        // const newFormData = new FormData();
 
-        newFormData.append("data", JSON.stringify(registerData));
+        // newFormData.append("data", JSON.stringify(registerData));
 
         const res = await fetch("http://localhost:5000/api/v1/users/register", {
             method: "POST",

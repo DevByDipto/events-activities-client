@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import { Button } from "./ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
+import { Checkbox } from "./ui/checkbox";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerPatient, null);
@@ -66,8 +67,12 @@ const RegisterForm = () => {
               </FieldDescription>
             )}
           </Field>
+         
+
+
+
           {/* Confirm Password */}
-          <Field className="md:col-span-2">
+          <Field className="">
             <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
             <Input
               id="confirmPassword"
@@ -81,6 +86,27 @@ const RegisterForm = () => {
               </FieldDescription>
             )}
           </Field>
+           {/* role */}
+        <Field>
+          <div className="flex gap-2 items-center">
+<FieldLabel htmlFor="becomeHost">Become a Host</FieldLabel>
+
+  <Checkbox
+    id="becomeHost"
+    name="becomeHost"
+    value="HOST" 
+    // defaultValue="USER"
+    // defaultChecked={user?.role === "HOST"}
+  />
+          </div>
+  
+
+  {getFieldError("becomeHost") && (
+    <FieldDescription className="text-red-600">
+      {getFieldError("becomeHost")}
+    </FieldDescription>
+  )}
+</Field>
         </div>
         <FieldGroup className="mt-4">
           <Field>
