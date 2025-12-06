@@ -1,0 +1,46 @@
+"use client"
+import blockUser from '@/services/admin/blockUser';
+import { revalidatePathFunction } from '@/services/event/eventDetails';
+import React, { useEffect, useState } from 'react'
+import { toast } from "sonner";
+
+const HandleBlockUser = ({host}) => {
+      const [isStatusChange, setIsStatusChange] = useState(false);
+
+       useEffect(()=>{
+          async function fetchData() {
+        await revalidatePathFunction(`/admin/dashboard/manage-host`)
+          }
+          fetchData()
+        },[isStatusChange])
+
+     const handleBlock = async (id, currentStatus) => {
+    try {
+        
+        const updateData= {isBlocked:!currentStatus}
+      const res = await blockUser(updateData,id);
+
+      if (res.success) {
+        toast.success(`host ${currentStatus ? "unblocked" : "blocked"} successfully`);
+setIsStatusChange(!isStatusChange)
+       
+      } else {
+        toast.error(res.message || "Failed to update host status");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
+  return (
+    <button
+                  onClick={() => handleBlock(host.id, host.isBlocked)}
+                  className={`px-2 my-2  rounded text-white ${
+                    host?.isBlocked ? "bg-green-600" : "bg-red-600"
+                  }`}
+                >
+                  {host?.isBlocked ? "Unblock" : "Block"}
+                </button>
+  )
+}
+
+export default HandleBlockUser
