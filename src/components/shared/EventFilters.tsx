@@ -7,21 +7,31 @@ import {
   EventFilters as FilterState,
   ALL_EVENT_TYPES,
   EVENT_TYPE_LABELS,
+  Event,
 } from "../../types/index"
-import { uniqueLocations } from '../../utils/mockData'
+// import { uniqueLocations } from '../../utils/mockData'
 import { Checkbox } from './Checkbox'
+// import allEvents from '@/services/event/allEvents'
 
 interface EventFiltersProps {
   filters: FilterState
   onChange: (filters: FilterState) => void
   onClear: () => void
+  eventData:Event[]
 }
 
 export function EventFilters({
   filters,
   onChange,
   onClear,
+  eventData
 }: EventFiltersProps) {
+  // const events = await allEvents()
+  // console.log("sssss",events);
+  
+  const uniqueLocations = [...new Set(eventData?.map((e) => e.location))]
+// console.log("uniqueLocations",uniqueLocations);
+
   const eventTypeOptions = ALL_EVENT_TYPES.map((type) => ({
     value: type,
     label: EVENT_TYPE_LABELS[type],

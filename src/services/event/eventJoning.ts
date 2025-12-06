@@ -1,0 +1,30 @@
+import { getCookie } from "../auth/tokenHandlers";
+
+// utils/eventJoining.ts
+const eventJoining = async (eventId: string) => {
+  try {
+     const accessToken = await getCookie('accessToken')
+    const response = await fetch(`http://localhost:5000/api/v1/events/${eventId}/join`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+         Cookie: `accessToken=${accessToken}`,
+      },
+      credentials: 'include',
+      // যদি request body দরকার হয়, যেমন user info:
+      // body: JSON.stringify({ userId: "user-id-here" }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to join the event');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error joining event:', error);
+    throw error;
+  }
+};
+
+export default eventJoining;

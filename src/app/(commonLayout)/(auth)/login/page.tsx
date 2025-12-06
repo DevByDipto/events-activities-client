@@ -1,4 +1,4 @@
-import LoginForm from "@/components/login-form";
+import LoginForm from "@/components/LoginForm"; 
 
 const LoginPage =async ({searchParams}) => {
   const params = await searchParams

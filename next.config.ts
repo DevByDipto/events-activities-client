@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
  images: {
-    domains: ['images.unsplash.com', 'via.placeholder.com'], // এখানে তোমার সব external host যোগ করো
+    domains: ['images.unsplash.com', 'via.placeholder.com',"example.com"], // এখানে তোমার সব external host যোগ করো
   },
 };
 

@@ -1,20 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { EventCard } from '@/components/shared/EventCard' 
 import { EventFilters } from '@/components/shared/EventFilters' 
 import { mockEvents, mockSavedEvents } from "../../../utils/mockData"
 import { EventFilters as FilterState } from '../../../types/index'
-import { useAuth } from '@/hooks/useAuth'
+import userInfo from '@/services/user/userInfo'
+import allEvents from '@/services/event/allEvents'
 
-export function ExplorePage() {
-  const { user } = useAuth()
+export default function ExplorePage() {
+  const [user, setUser] = useState<any>(null);
+// console.log("user",user);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await userInfo();
+      setUser(data);
+    };
+
+    fetchUser();
+  }, []);
+
+  const [events, setEvent] = useState<any>(null);
+// console.log("events",events);
+
+  useEffect(() => {
+    const fetcEvent = async () => {
+      const data = await allEvents();
+      setEvent(data);
+    };
+
+    fetcEvent();
+  }, []);
+
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     eventType: '',
     location: '',
     date: '',
     isFeatured: false,
-    timeFilter: 'upcoming',
+    timeFilter: 'all',
   })
 
   const [savedEventIds, setSavedEventIds] = useState<string[]>(
@@ -27,7 +52,7 @@ export function ExplorePage() {
 
   const filteredEvents = useMemo(() => {
     const now = new Date()
-    return mockEvents.filter((event) => {
+    return events?.filter((event) => {
       // Search filter
       if (
         filters.search &&
@@ -63,7 +88,7 @@ export function ExplorePage() {
       }
       return true
     })
-  }, [filters])
+  }, [filters,events])
 
   const handleClearFilters = () => {
     setFilters({
@@ -103,6 +128,7 @@ export function ExplorePage() {
             filters={filters}
             onChange={setFilters}
             onClear={handleClearFilters}
+            eventData={events}
           />
         </div>
 
@@ -111,14 +137,14 @@ export function ExplorePage() {
           <p className="text-muted-foreground">
             Showing{' '}
             <span className="font-medium text-foreground">
-              {filteredEvents.length}
+              {filteredEvents?.length}
             </span>{' '}
             events
           </p>
         </div>
 
         {/* Events Grid */}
-        {filteredEvents.length > 0 ? (
+        {filteredEvents?.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents.map((event) => (
               <EventCard

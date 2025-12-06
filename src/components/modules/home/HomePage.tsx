@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -25,10 +26,22 @@ import {
 import { Button } from '../../shared/Button'
 import { EventCard } from '../../shared/EventCard'
 import { mockEvents, mockUsers, mockReviews } from '../../../utils/mockData'
+import allEvents from '@/services/event/allEvents'
 
-export function HomePage() {
-  const featuredEvents = mockEvents
-    .filter((e) => e.isFeatured && e.status === 'OPEN')
+export function HomePage() { 
+  const [events, setEvent] = useState<any>(null);
+// console.log("events",events);
+
+  useEffect(() => {
+    const fetcEvent = async () => {
+      const data = await allEvents();
+      setEvent(data);
+    };
+
+    fetcEvent();
+  }, []);
+  const featuredEvents = events
+    ?.filter((e) => e.isFeatured && e.status === 'OPEN')
     .slice(0, 6)
 
   const topHosts = mockUsers
@@ -176,7 +189,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
+            {steps?.map((step, index) => (
               <div key={step.title} className="relative text-center">
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <step.icon className="w-8 h-8 text-primary" />
@@ -208,7 +221,7 @@ export function HomePage() {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredEvents.map((event) => (
+            {featuredEvents?.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
@@ -225,7 +238,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((category) => (
+            {categories?.map((category) => (
               <Link
                 key={category.label}
                 href={`/explore?type=${category.label.toUpperCase()}`}
@@ -251,10 +264,10 @@ export function HomePage() {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {topHosts.map((host) => (
+            {topHosts?.map((host) => (
               <Link
                 key={host.id}
-                href={`/profile/${host.id}`}
+                href={`#`}
                 className="group bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition-all duration-300"
               >
                 <Image
@@ -287,10 +300,10 @@ export function HomePage() {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {mockReviews.slice(0, 3).map((review) => (
+            {mockReviews.slice(0, 3)?.map((review) => (
               <div key={review.id} className="bg-background rounded-xl border border-border p-6">
                 <div className="flex items-center gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
+                  {Array.from({ length: 5 })?.map((_, i) => (
                     <Star
                       key={i}
                       className={`w-5 h-5 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}`}
