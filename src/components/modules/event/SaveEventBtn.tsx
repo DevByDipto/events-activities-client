@@ -6,7 +6,7 @@ import { Heart, Save } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-const SaveEventBtn = ({eventId,isSaved}) => {
+const SaveEventBtn = ({eventId,isSaved,role}) => {
     const [saved,setSaved] = useState(false)
     useEffect(()=>{
         async function fetchData() {
@@ -15,7 +15,7 @@ const SaveEventBtn = ({eventId,isSaved}) => {
         fetchData()
       },[saved])
     const handleEventSave = async()=>{
-        if(isSaved)return
+        if(isSaved || role !== "USER")return
         setSaved(!saved)
         console.log("eventId",eventId);
         console.log("work");

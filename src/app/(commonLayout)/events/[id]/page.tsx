@@ -67,8 +67,13 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   // useEffect(() => {
   //   const fetchUser = async () => {
   const eventAndParticipents = await getAllEventAndParticipents();
-  const savedEvents = await getAllSaveEvent()
-  const isSaved = savedEvents.some((saveEvent:any)=>saveEvent.eventId ===id)
+  let savedEvents;
+  let isSaved = false
+  if(user.role === "USER"){
+ savedEvents = await getAllSaveEvent()
+ isSaved = savedEvents.some((saveEvent:any)=>saveEvent.eventId ===id)
+  }
+  
   console.log("isSaved",isSaved);
   
   // console.log("under use effect eventAndParticipents",data);
@@ -186,7 +191,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
           {/* <Button variant="secondary" size="sm">
             <Share2 className="w-4 h-4" />
           </Button> */}
-{ event.id && <SaveEventBtn eventId={event.id} isSaved={isSaved}/>}
+{ (event.id && user.role == 'USER') && <SaveEventBtn eventId={event.id} isSaved={isSaved} role={user.role}/>}
           
         </div>
       </div>

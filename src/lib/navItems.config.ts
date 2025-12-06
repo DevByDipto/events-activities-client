@@ -42,10 +42,11 @@ export const hostNavItems: NavSection[] = [
         title: "Patient Management",
         items: [
             {
-                title: "Appointments",
-                href: "/host/dashboard/appoinments",
-                icon: "Calendar", // ✅ String
-                badge: "3",
+              
+                title: "My Events",
+                href: "/host/dashboard/my-events",
+                icon: "Event", // ✅ String
+                // badge: "3",
                 roles: ["HOST"],
             },
             // {
@@ -71,13 +72,13 @@ export const userNavItems: NavSection[] = [
             {
                 title: "My Events",
                 href: "/dashboard/my-events",
-                icon: "Event", // ✅ String
+                icon: "Events", // ✅ String
                 roles: ["USER"],
             },
             {
                 title: "Saved Events",
                 href: "/dashboard/saved-events",
-                icon: "Saved", // ✅ String
+                icon: "Save", // ✅ String
                 roles: ["USER"],
             },
         ],
@@ -107,48 +108,54 @@ export const adminNavItems: NavSection[] = [
         title: "User Management",
         items: [
             {
-                title: "Admins",
-                href: "/admin/dashboard/admins-management",
-                icon: "Shield", // ✅ String
+                title: "Manage User",
+                href: "/admin/dashboard/manage-user",
+                icon: "user", // ✅ String
                 roles: ["ADMIN"],
             },
             {
-                title: "Doctors",
-                href: "/admin/dashboard/doctors-management",
-                icon: "Stethoscope", // ✅ String
+                title: "Manage Host",
+                href: "/admin/dashboard/manage-host",
+                icon: "host", // ✅ String
                 roles: ["ADMIN"],
             },
             {
-                title: "Patients",
-                href: "/admin/dashboard/patients-management",
-                icon: "Users", // ✅ String
+                title: "Manage event",
+                href: "/admin/dashboard/manage-events",
+                icon: "event", // ✅ String
                 roles: ["ADMIN"],
             },
+            // {
+            //     title: "Creat Admin",
+            //     href: "/admin/dashboard/creat-admin",
+            //     icon: "admin", // ✅ String
+            //     roles: ["ADMIN"],
+            // },
         ],
     },
-    {
-        title: "Hospital Management",
-        items: [
-            {
-                title: "Appointments",
-                href: "/admin/dashboard/appointments-management",
-                icon: "Calendar", // ✅ String
-                roles: ["ADMIN"],
-            },
-            {
-                title: "Schedules",
-                href: "/admin/dashboard/schedules-management",
-                icon: "Clock", // ✅ String
-                roles: ["ADMIN"],
-            },
-            {
-                title: "Specialities",
-                href: "/admin/dashboard/specialities-management",
-                icon: "Hospital", // ✅ String
-                roles: ["ADMIN"],
-            },
-        ],
-    }
+    // {
+    //     title: "Hospital Management",
+    //     items: [
+    //         {
+    //             title: "Appointments",
+    //             href: "/admin/dashboard/appointments-management",
+    //             icon: "Calendar", // ✅ String
+    //             roles: ["ADMIN"],
+    //         },
+    //         {
+    //             title: "Schedules",
+    //             href: "/admin/dashboard/schedules-management",
+    //             icon: "Clock", // ✅ String
+    //             roles: ["ADMIN"],
+    //         },
+    //         {
+    //             title: "Specialities",
+    //             href: "/admin/dashboard/specialities-management",
+    //             icon: "Hospital", // ✅ String
+    //             roles: ["ADMIN"],
+    //         },
+    //     ],
+    // }
 ]
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {

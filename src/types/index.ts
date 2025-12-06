@@ -1,6 +1,23 @@
 // User Roles
 export type UserRole = 'USER' | 'ADMIN' | 'HOST'
-
+export const eventTypes: string[] = [
+  'CONCERT',
+  'HIKE',
+  'DINNER',
+  'SPORTS',
+  'WORKSHOP',
+  'MEETUP',
+  'BOARD_GAME_NIGHT',
+  'TECH_TALK',
+  'CYCLING',
+  'MOVIE_NIGHT',
+  'PICNIC',
+  'ART_EXHIBITION',
+  'MARATHON',
+  'CAMPING',
+  'BOOK_CLUB',
+  'NETWORKING_EVENT'
+];
 // Event Types
 export type EventType =
   | 'CONCERT'
@@ -63,8 +80,8 @@ export interface Event {
   image: string
   joiningFee: number
   status: EventStatus
-  isApproved: boolean
   isFeatured: boolean
+  isApproved: boolean
   createdAt: Date
   updatedAt: Date
 }
