@@ -23,8 +23,9 @@ const leaveEvent = async (eventId: string) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, // PERFECT way
+          Cookie: `accessToken=${accessToken}`, // PERFECT way
         },
+        
         credentials: "include", // Cookies handled automatically
       }
     );

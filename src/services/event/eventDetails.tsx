@@ -34,7 +34,7 @@ const eventDetails = async (id:string) => {
 
 export default eventDetails
 
-export const fatchFunction = async (id)=>{
+export const revalidatePathFunction = async (path:string)=>{
 
-        revalidatePath(`/events/${id}`) 
+        revalidatePath(`${path}`) 
     }

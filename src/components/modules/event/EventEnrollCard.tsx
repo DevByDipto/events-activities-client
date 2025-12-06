@@ -1,6 +1,6 @@
    "use client"
 import { Button } from '@/components/ui/button'
-import { fatchFunction } from '@/services/event/eventDetails';
+import { fatchFunction, revalidatePathFunction } from '@/services/event/eventDetails';
 import eventJoining from '@/services/event/eventJoning';
 import leaveEvent from '@/services/event/leaveEvent';
 import { CheckCircle, XCircle } from 'lucide-react'
@@ -31,7 +31,8 @@ import { toast } from 'sonner';
     //   },
     // });
     toast.success("Successfully joined the event!!")
-    fatchFunction(id)
+    setIsJoining(false);
+    // revalidatePathFunction(`events/${id}`)
     // console.log("eventJoining result",result.paymentUrl);
     
     
@@ -40,15 +41,16 @@ import { toast } from 'sonner';
 
   useEffect(()=>{
     async function fetchData() {
-  await setIsJoining(false);
+  await revalidatePathFunction(`events/${id}`)
     }
     fetchData()
-  },[isJoining,isLeaving])
+  },[isJoining,isLeaving,id])
+
   const handleLeave = async () => {
     setIsLeaving(true);
     const resutl = await leaveEvent(id)
     setIsLeaving(false);
-    fatchFunction(id)
+    
     toast.success("Successfully left the event")
   };
      return (
@@ -71,7 +73,7 @@ import { toast } from 'sonner';
                     onClick={handleLeave}
                     // isLoading={isLeaving}
                   >
-                    Leave Event
+                    {isLeaving ? " Leaving Event..." : " Leave Event"}
                   </Button>
                 </div>
               ) : event.status === "OPEN" ? (

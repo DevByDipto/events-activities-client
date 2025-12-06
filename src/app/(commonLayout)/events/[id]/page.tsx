@@ -36,6 +36,8 @@ import EventEnrollCard from "@/components/modules/event/EventEnrollCard";
 import { getCookie } from "@/services/auth/tokenHandlers";
 import getSinglePayments from "@/services/payment/getSinglePayments";
 import PaymentUrlCard from "@/components/modules/event/PaymentUrlCard";
+import SaveEventBtn from "@/components/modules/event/SaveEventBtn";
+import getAllSaveEvent from "@/services/saveEvent/getAllSaveEvent";
 
 interface EventPageProps {
   params: {
@@ -65,6 +67,10 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   // useEffect(() => {
   //   const fetchUser = async () => {
   const eventAndParticipents = await getAllEventAndParticipents();
+  const savedEvents = await getAllSaveEvent()
+  const isSaved = savedEvents.some((saveEvent:any)=>saveEvent.eventId ===id)
+  console.log("isSaved",isSaved);
+  
   // console.log("under use effect eventAndParticipents",data);
   //     setEventAndParticipents(data);
   //   };
@@ -94,7 +100,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   // async function fetchData() {
   // You can await here
   const event = await eventDetails(id as string);
-  // console.log("event",event);
+  console.log("event",event);
   const res = await getSinglePayments(user.id,event.id,)
   const payment = res[0]
   console.log("payment",payment);
@@ -120,7 +126,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   }
 
   const host = getUserById(event.hostId);
-  const participants = mockEventParticipants
+  const participants = eventAndParticipents
     .filter((ep) => ep.eventId === event.id)
     .map((ep) => ep.user!)
     .filter(Boolean);
@@ -177,12 +183,11 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
           </Link>
         </div>
         <div className="absolute top-4 right-4 flex gap-2">
-          <Button variant="secondary" size="sm">
+          {/* <Button variant="secondary" size="sm">
             <Share2 className="w-4 h-4" />
-          </Button>
-          <Button variant="secondary" size="sm">
-            <Heart className="w-4 h-4" />
-          </Button>
+          </Button> */}
+{ event.id && <SaveEventBtn eventId={event.id} isSaved={isSaved}/>}
+          
         </div>
       </div>
 
@@ -393,9 +398,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                 isAuthenticated={isAuthenticated}
                 id={id}
               />
-             
-
-            
+       
             </div>
           
             
