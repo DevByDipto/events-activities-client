@@ -15,11 +15,14 @@ import {
   Users,
   Shield,
   Compass,
+  User2,
+  Circle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import LogoutButton from "./LogoutButton";
 import userInfo from "@/services/user/userInfo";
+import { revalidatePathFunction } from "@/services/event/eventDetails";
 import { getCookie } from "@/services/auth/tokenHandlers";
 
 export default function PublikkNavbar() {
@@ -27,7 +30,17 @@ export default function PublikkNavbar() {
   const pathname = usePathname();
 
   const [user, setUser] = useState<any>(null);
-// console.log("user",user);
+        const [isStatusChange, setIsStatusChange] = useState(false);
+        const [accessToken, setAccessToken] = useState<any>();
+
+console.log("user",accessToken);
+useEffect(()=>{
+          async function fetchData() {
+      const result = await getCookie("accessToken")
+setAccessToken(result)
+          }
+          fetchData()
+        },[accessToken])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -37,10 +50,11 @@ export default function PublikkNavbar() {
 
     fetchUser();
   }, []);
+  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
  
  let isAuthenticated : boolean
- if(user?.role){
+ if(accessToken){
    isAuthenticated = true;
   }else{
     isAuthenticated = false;
@@ -73,13 +87,13 @@ export default function PublikkNavbar() {
     if (user?.role === "ADMIN") {
       return (
         <>
-          <Link href="/dashboard" className={linkClass("/dashboard")}>
+          <Link href="/my-profile" className={linkClass("/dashboard")}>
             <LayoutDashboard className="w-4 h-4" />
             Admin Dashboard
           </Link>
 
           <Link
-            href="/dashboard?tab=users"
+            href="/admin/dashboard/manage-user"
             className={linkClass("/dashboard?tab=users")}
           >
             <Users className="w-4 h-4" />
@@ -87,7 +101,7 @@ export default function PublikkNavbar() {
           </Link>
 
           <Link
-            href="/dashboard?tab=hosts"
+            href="/admin/dashboard/manage-host"
             className={linkClass("/dashboard?tab=hosts")}
           >
             <Shield className="w-4 h-4" />
@@ -95,7 +109,7 @@ export default function PublikkNavbar() {
           </Link>
 
           <Link
-            href="/dashboard?tab=events"
+            href="/admin/dashboard/manage-events"
             className={linkClass("/dashboard?tab=events")}
           >
             <Calendar className="w-4 h-4" />
@@ -113,13 +127,13 @@ export default function PublikkNavbar() {
             Explore Events
           </Link>
 
-          <Link href="/dashboard" className={linkClass("/dashboard")}>
+          <Link href="/host/dashboard/my-events" className={linkClass("/dashboard")}>
             <Calendar className="w-4 h-4" />
             My Events (Hosted)
           </Link>
 
           <Link
-            href="/dashboard?tab=create"
+            href="/host/dashboard/creat-event"
             className={linkClass("/dashboard?tab=create")}
           >
             <Plus className="w-4 h-4" />
@@ -136,7 +150,7 @@ export default function PublikkNavbar() {
           Explore Events
         </Link>
 
-        <Link href="/dashboard" className={linkClass("/dashboard")}>
+        <Link href="/dashboard/my-events" className={linkClass("/dashboard")}>
           <Calendar className="w-4 h-4" />
           My Events
         </Link>
@@ -168,14 +182,21 @@ export default function PublikkNavbar() {
             {isAuthenticated ? (
               <>
                 <Link
-                  href={`/profile/${user?.id}`}
+                  href={`/my-profile`}
                   className={linkClass(`/profile/${user?.id}`)}
                 >
                   <User className="w-4 h-4" />
                   Profile
-                </Link>
+                </Link> 
+                <Link
+                  href={`/community`}
+                  className={linkClass(`/Community`)}
+                >
+                  <Circle className="w-4 h-4" />
+                  Community
+                </Link> 
 
-               <LogoutButton/>
+               <LogoutButton setAccessToken={setAccessToken}/>
               </>
             ) : (
               <>
@@ -217,15 +238,23 @@ export default function PublikkNavbar() {
               {isAuthenticated ? (
                 <>
                   <Link
-                    href={`/profile/${user?.id}`}
-                    className={linkClass(`/profile/${user?.id}`)}
+                    href={`/my-profile`}
+                    className={linkClass(`/my-profile`)}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <User className="w-4 h-4" />
                     Profile
                   </Link>
+                  <Link
+                    href={`/community`}
+                    className={linkClass(`/Community`)}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Circle className="w-4 h-4" />
+                    Community
+                  </Link>
 
-                <LogoutButton/>
+                   <LogoutButton setAccessToken={setAccessToken}/>
                 </>
               ) : (
                 <>

@@ -52,6 +52,15 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             },
         });
 
+        if (!res.ok) {
+      const result = await res.json();
+      if(result.success === false && result.message === "You are blocked by admin!"){
+        // return  {message:result.message}
+        throw new Error("You are blocked by admin!")
+      }
+     
+    }
+
         const setCookieHeaders = res.headers.getSetCookie();
 
         if (setCookieHeaders && setCookieHeaders.length > 0) {
@@ -109,10 +118,10 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             if (isValidRedirectForRole(requestedPath, userRole)) {
                 redirect(`${requestedPath}?loggedIn=true`);
             } else {
-                redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+                redirect(`/my-profile?loggedIn=true`);
             }
         } else {
-            redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+            redirect(`/my-profile?loggedIn=true`);
         }
 
     } catch (error: any) {

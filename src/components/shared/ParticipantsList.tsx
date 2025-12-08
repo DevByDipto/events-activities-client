@@ -1,4 +1,4 @@
-"use client";
+
 
 import React from "react";
 import { User } from "@/types";
@@ -14,8 +14,8 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
   maxDisplay = 5,
   size = "md",
 }) => {
-  const displayedParticipants = participants.slice(0, maxDisplay);
-  const remainingCount = participants.length - maxDisplay;
+  const displayedParticipants = participants?.slice(0, maxDisplay);
+  const remainingCount = participants?.length - maxDisplay;
 
   const sizes = {
     sm: {
@@ -37,14 +37,14 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
 
   const { avatar, text, overlap } = sizes[size];
 
-  if (participants.length === 0) {
+  if (participants?.length === 0) {
     return <p className="text-muted-foreground text-sm">No participants yet</p>;
   }
 
   return (
     <div className="flex items-center">
       <div className="flex">
-        {displayedParticipants.map((participant, index) => (
+        {displayedParticipants?.map((participant, index) => (
           <div
             key={participant.id}
             className={`${avatar} rounded-full border-2 border-background overflow-hidden ${
@@ -74,7 +74,7 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
       </div>
 
       <span className={`ml-3 ${text} text-muted-foreground`}>
-        {participants.length} participant{participants.length !== 1 ? "s" : ""}
+        {participants?.length} participant{participants?.length !== 1 ? "s" : ""}
       </span>
     </div>
   );

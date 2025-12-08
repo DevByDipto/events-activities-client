@@ -54,10 +54,11 @@ if(result.success){
 );
   return (<>
   {
+    event.status === "COMPLETED" ? 
     alreadyReviewed ?  <p className="text-sm font-medium text-green-600">
-       lready review submit
+       Already review submit
     </p> : <Button onClick={() => openModal(event)}>Give Review</Button>
-
+: "Event is not available"
   }
        {/* Review Modal */}
       <Dialog open={open} onOpenChange={setOpen}>

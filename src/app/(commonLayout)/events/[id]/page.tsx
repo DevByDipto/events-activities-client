@@ -38,6 +38,8 @@ import getSinglePayments from "@/services/payment/getSinglePayments";
 import PaymentUrlCard from "@/components/modules/event/PaymentUrlCard";
 import SaveEventBtn from "@/components/modules/event/SaveEventBtn";
 import getAllSaveEvent from "@/services/saveEvent/getAllSaveEvent";
+import getUserEventParticipants from "@/services/eventParticipants/getUserEventParticipants";
+import getAllReview from "@/services/review/getAllReview";
 
 interface EventPageProps {
   params: {
@@ -67,6 +69,10 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   // useEffect(() => {
   //   const fetchUser = async () => {
   const eventAndParticipents = await getAllEventAndParticipents();
+  const UserEventAndParticipents = await getUserEventParticipants();
+  const reviewsData = await getAllReview();
+  console.log("eventAndParticipents",eventAndParticipents);
+  
   let savedEvents;
   let isSaved = false
   if(user.role === "USER"){
@@ -74,7 +80,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
  isSaved = savedEvents.some((saveEvent:any)=>saveEvent.eventId ===id)
   }
   
-  console.log("isSaved",isSaved);
+  // console.log("isSaved",isSaved);
   
   // console.log("under use effect eventAndParticipents",data);
   //     setEventAndParticipents(data);
@@ -105,10 +111,10 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   // async function fetchData() {
   // You can await here
   const event = await eventDetails(id as string);
-  console.log("event",event);
+  // console.log("event",event);
   const res = await getSinglePayments(user.id,event.id,)
   const payment = res[0]
-  console.log("payment",payment);
+  // console.log("payment",payment);
   
   //    setIsevent(event)
   //   }
@@ -131,15 +137,15 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   }
 
   const host = getUserById(event.hostId);
-  const participants = eventAndParticipents
-    .filter((ep) => ep.eventId === event.id)
+  const participants = eventAndParticipents?.filter((ep) => ep.event.id === event.id)
     .map((ep) => ep.user!)
     .filter(Boolean);
-  const reviews = mockReviews
-    .filter((r) => r.hostId === event.hostId)
+    console.log("participants",participants);
+    
+  const reviews = reviewsData?.filter((r) => r.hostId === event.hostId)
     .slice(0, 3);
   const isParticipant = user
-    ? eventAndParticipents.some(
+    ? UserEventAndParticipents.some(
         (ep) => ep.eventId === event.id && ep.userId === user.id
       )
     : false;
@@ -411,7 +417,8 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
 payment={payment}
 isParticipant={isParticipant}
 /> */}
-
+{/* {console.log("payment",payment)
+} */}
 {isParticipant && payment.paymentStatus === "UNPAID" && (
   <div className="bg-gray-800 border border-gray-700 text-gray-100 p-6 rounded-xl shadow-md sticky top-24 space-y-4 max-w-md mx-auto">
     <div className="flex items-start gap-3">

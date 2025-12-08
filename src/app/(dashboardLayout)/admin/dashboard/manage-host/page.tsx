@@ -31,7 +31,7 @@ console.log(hosts);
               <td>{host.isBlocked ? "Yes" : "No"}</td>
 
               <td>
-                <HandleBlockUser  host={host} />
+                <HandleBlockUser  user={host} />
               </td>
             </tr>
           ))}

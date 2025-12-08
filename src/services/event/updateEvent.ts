@@ -7,6 +7,7 @@ const updateEvent = async(eventId,updatedData) => {
       // Bangla: Client-side cookie থেকে accessToken নিচ্ছি  
       // English: Getting token from client cookies  
       const accessToken = await getCookie("accessToken");
+  console.log("updatedData",updatedData);
   
       if (!accessToken) {
         return {

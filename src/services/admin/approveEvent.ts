@@ -6,6 +6,7 @@ const approveEvent =async (eventId,updatedData) => {
    try {
          // Bangla: Client-side cookie থেকে accessToken নিচ্ছি  
          // English: Getting token from client cookies  
+          console.log("from approveEvent",eventId,updatedData);
          const accessToken = await getCookie("accessToken");
      
          if (!accessToken) {

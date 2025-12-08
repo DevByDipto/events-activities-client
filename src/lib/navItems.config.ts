@@ -49,6 +49,22 @@ export const hostNavItems: NavSection[] = [
                 // badge: "3",
                 roles: ["HOST"],
             },
+            {
+              
+                title: "Manage User",
+                href: "/host/dashboard/manage-participants",
+                icon: "participants", // ✅ String
+                // badge: "3",
+                roles: ["HOST"],
+            },
+            {
+              
+                title: "Manage Payments",
+                href: "/host/dashboard/my-payments",
+                icon: "participants", // ✅ String
+                // badge: "3",
+                roles: ["HOST"],
+            },
             // {
             //     title: "My Schedules",
             //     href: "/doctor/dashboard/my-schedules",

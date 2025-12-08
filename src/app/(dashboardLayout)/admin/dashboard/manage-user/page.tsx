@@ -5,6 +5,7 @@ import getAllUser from "@/services/admin/getAllUser";
 
 const UsersTable =async () => {
   const users =await getAllUser()
+  
   console.log(users);
 
  

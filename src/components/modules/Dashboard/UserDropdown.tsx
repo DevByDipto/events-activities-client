@@ -28,7 +28,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="rounded-full">
           <span className="text-sm font-semibold">
-            {userInfo.name.charAt(0).toUpperCase()}
+            {userInfo?.name?.charAt(0)?.toUpperCase()}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -38,7 +38,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             <p className="text-sm font-medium">{userInfo.name}</p>
             <p className="text-xs text-muted-foreground">{userInfo.email}</p>
             <p className="text-xs text-primary capitalize">
-              {userInfo.role.toLowerCase()}
+              {userInfo?.role?.toLowerCase()}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -56,12 +56,12 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           onClick={handleLogout}
           className="cursor-pointer text-red-600"
-        >
+        > */}
           <LogoutButton />
-        </DropdownMenuItem>
+        {/* </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

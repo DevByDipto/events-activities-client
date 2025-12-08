@@ -4,7 +4,9 @@ import { revalidatePathFunction } from '@/services/event/eventDetails';
 import React, { useEffect, useState } from 'react'
 import { toast } from "sonner";
 
-const HandleBlockUser = ({host}) => {
+const HandleBlockUser = ({user}) => {
+  console.log();
+  
       const [isStatusChange, setIsStatusChange] = useState(false);
 
        useEffect(()=>{
@@ -33,12 +35,12 @@ setIsStatusChange(!isStatusChange)
   };
   return (
     <button
-                  onClick={() => handleBlock(host.id, host.isBlocked)}
+                  onClick={() => handleBlock(user.id, user.isBlocked)}
                   className={`px-2 my-2  rounded text-white ${
-                    host?.isBlocked ? "bg-green-600" : "bg-red-600"
+                    user?.isBlocked ? "bg-green-600" : "bg-red-600"
                   }`}
                 >
-                  {host?.isBlocked ? "Unblock" : "Block"}
+                  {user?.isBlocked ? "Unblock" : "Block"}
                 </button>
   )
 }

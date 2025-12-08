@@ -1,0 +1,58 @@
+
+import getAllUser from "@/services/admin/getAllUser";
+import React from "react";
+
+const CommunityPage = async () => {
+  const users = await getAllUser();
+  console.log("usersusers", users);
+
+  return (
+    <div className="flex flex-col items-center my-10 px-4">
+      <h1 className="text-2xl font-bold mb-6">Community Members</h1>
+      <div className="overflow-x-auto w-full max-w-6xl">
+        <table className="min-w-full table-auto border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 border">Image</th>
+              <th className="px-4 py-2 border">Name</th>
+              <th className="px-4 py-2 border">Email</th>
+              <th className="px-4 py-2 border">Role</th>
+              <th className="px-4 py-2 border">Location</th>
+              <th className="px-4 py-2 border">Bio</th>
+              <th className="px-4 py-2 border">Interests</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users?.map((user) => (
+              <tr key={user.id} className="text-center">
+                <td className="border px-4 py-2">
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-full mx-auto"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gray-300 mx-auto flex items-center justify-center">
+                      N/A
+                    </div>
+                  )}
+                </td>
+                <td className="border px-4 py-2">{user.name}</td>
+                <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">{user.role}</td>
+                <td className="border px-4 py-2">{user.location || "-"}</td>
+                <td className="border px-4 py-2">{user.bio || "-"}</td>
+                <td className="border px-4 py-2">
+                  {user.interests.length > 0 ? user.interests.join(", ") : "-"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default CommunityPage;

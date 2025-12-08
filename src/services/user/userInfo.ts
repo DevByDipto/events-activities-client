@@ -14,6 +14,10 @@ const userInfo = async () => {
     });
 
     if (!res.ok) {
+      // const result = await res.json();
+      // if(result.success === false && result.message === "You are blocked by admin!"){
+      //   return  {message:result.message}
+      // }
       // এখানেই HTTP error detect হবে
       const errorData = await res.json();
       throw new Error(errorData.message || "Request failed");

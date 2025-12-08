@@ -18,6 +18,7 @@ import ProfileEdit from "@/components/modules/profile/ProfileEdit";
 import allEvents from "@/services/event/allEvents";
 import getAllEventAndParticipents from "@/services/eventParticipants/getAllEventAndParticipents";
 import getAllReview from "@/services/review/getAllReview";
+import getUserEventParticipants from "@/services/eventParticipants/getUserEventParticipants";
 
 const ProfilePage: React.FC = async () => {
   // const id = params?.id as string;
@@ -33,8 +34,13 @@ const ProfilePage: React.FC = async () => {
   //   fetchUser();
   // }, []);
 const events = await allEvents()
-const eventParticipants = await getAllEventAndParticipents()
+const eventParticipants = await getUserEventParticipants()
 const reviewsData = await getAllReview()
+console.log("reviewsData",reviewsData);
+const totalRating = reviewsData?.filter((review)=> review.hostId === user.id).reduce((sum, item) => sum + item.rating, 0);
+
+console.log(totalRating); // 16
+
 const currentUser = user
 console.log("currentUser",currentUser);
 
@@ -98,13 +104,13 @@ console.log("currentUser",currentUser);
                       <span>{currentUser.location}</span>
                     </div>
                   )}
-                  {currentUser.rating && (
+                  {(totalRating && user.role == "HOST") && (
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       <span className="font-medium text-foreground">
-                        {currentUser.rating.toFixed(1)}
+                        {totalRating.toFixed(1)}
                       </span>
-                      <span>({currentUser.reviewCount} reviews)</span>
+                      <span>({totalRating} reviews)</span>
                     </div>
                   )}
                   <div className="flex items-center gap-1">

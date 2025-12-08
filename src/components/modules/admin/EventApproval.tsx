@@ -1,27 +1,31 @@
 "use client"
 import approveEvent from "@/services/admin/approveEvent";
+import { revalidatePathFunction } from "@/services/event/eventDetails";
 import { Event } from "@/types";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-const EventApproval = (event) => {
+const EventApproval = ({event}) => {
+console.log(event);
+      const [isStatusChange, setIsStatusChange] = useState(false);
 
-     const handleApprove = async (eventId: string, currentStatus: boolean) => {
+ useEffect(()=>{
+          async function fetchData() {
+        await revalidatePathFunction(`/admin/dashboard/manage-events`)
+          }
+          fetchData()
+        },[isStatusChange])
+     const handleApprove = async (currentStatus: boolean) => {
     try {
         const updatedData= {isApproved:!currentStatus}
-      const res = await approveEvent(eventId,updatedData );
+        console.log("from handleApprove",event.id,updatedData);
+        
+      const res = await approveEvent(event.id,updatedData );
 
       if (res.success) {
         toast.success(
           `Event ${currentStatus ? "unapproved" : "approved"} successfully`
         );
-
-        // Update UI instantly
-        // setEventList((prev) =>
-        //   prev.map((event) =>
-        //     event.id === eventId
-        //       ? { ...event, isApproved: !currentStatus }
-        //       : event
-        //   )
-        // );
+setIsStatusChange(!isStatusChange)
       } else {
         toast.error(res.message || "Failed to update approval");
       }
@@ -32,7 +36,7 @@ const EventApproval = (event) => {
   return (
     <button
                   onClick={() =>
-                    handleApprove(event.id, event.isApproved)
+                    handleApprove(event.isApproved)
                   }
                   className={`px-2 my-2 rounded text-white ${
                     event.isApproved ? "bg-red-600" : "bg-green-600"

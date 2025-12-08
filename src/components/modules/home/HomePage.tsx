@@ -27,6 +27,7 @@ import { Button } from '../../shared/Button'
 import { EventCard } from '../../shared/EventCard'
 import { mockEvents, mockUsers, mockReviews } from '../../../utils/mockData'
 import allEvents from '@/services/event/allEvents'
+import userInfo from '@/services/user/userInfo'
 
 export async function HomePage() { 
   // const [events, setEvent] = useState<any>(null);
@@ -35,6 +36,7 @@ export async function HomePage() {
   // useEffect(() => {
   //   const fetcEvent = async () => {
       const events = await allEvents();
+      const user = await userInfo()
   //     setEvent(data);
   //   };
 
@@ -114,17 +116,24 @@ export async function HomePage() {
               <p className="mt-6 text-lg text-muted-foreground max-w-xl">
                 Connect with like-minded people for concerts, hiking trips, board game nights, tech meetups, and more. Never miss out on experiences because you don't have someone to go with.
               </p>
+
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/explore">
+                {
+                  user.role == "HOST" ?  <Link href="/host/dashboard/creat-events">
+                  <Button size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
+                    Create Event
+                  </Button>
+                </Link> 
+                :
+                 <Link href="/explore">
                   <Button size="lg" rightIcon={<ArrowRight className="w-5 h-5" />}>
                     Find Activities
                   </Button>
                 </Link>
-                <Link href="/register">
-                  <Button variant="outline" size="lg">
-                    Create Event
-                  </Button>
-                </Link>
+
+                }
+               
+               
               </div>
               <div className="mt-8 flex items-center gap-8">
                 <div>
@@ -193,7 +202,10 @@ export async function HomePage() {
                 <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <step.icon className="w-8 h-8 text-primary" />
                 </div>
-                <div className="absolute top-8 left-1/2 w-full h-0.5 bg-border hidden md:block last:hidden" />
+                {/* {
+                  index + 1 <= 2 && <div className="absolute top-8 left-1/2 w-full h-0.5 bg-border hidden md:block last:hidden -z-20" />
+                } */}
+                
                 <span className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
                   {index + 1}
                 </span>
