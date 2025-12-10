@@ -6,7 +6,7 @@ import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 import { setCookie } from "./tokenHandlers";
-import z from "zod";
+import {z} from "zod";
 
 const loginValidationZodSchema = z.object({
     email: z.email({
