@@ -3,14 +3,16 @@
 
 import { logoutUser } from "@/services/auth/logoutUser";
 import { Button } from "../ui/button";
-import { revalidatePathFunction } from "@/services/event/eventDetails";
-import { useEffect } from "react";
 
 const LogoutButton = ({setAccessToken}:{setAccessToken?:any}) => {
  
   const handleLogout = async () => {
     await logoutUser();
     setAccessToken(null)
+    // যখন কিছু করার পরে reload দিতে চাও
+    // window.location.href = "/login?loggedOut=true";
+
+
   };
   return (
     <Button variant={"destructive"} onClick={handleLogout}>

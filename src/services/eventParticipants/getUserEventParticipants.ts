@@ -6,7 +6,7 @@ import { getCookie } from "../auth/tokenHandlers";
 const getUserEventParticipants =async () => {
    try {
      const accessToken = await getCookie('accessToken')
-     const res = await fetch("http://localhost:5000/api/v1/event-participants/user", {
+     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/event-participants/user`, {
        credentials: "include",
           headers: {
       Cookie: `accessToken=${accessToken}`,

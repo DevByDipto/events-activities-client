@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { EventCard } from '@/components/shared/EventCard' 
 import { EventFilters } from '@/components/shared/EventFilters' 
-import { mockEvents, mockSavedEvents } from "../../../utils/mockData"
+import { mockSavedEvents } from "../../../utils/mockData"
 import { EventFilters as FilterState } from '../../../types/index'
 import userInfo from '@/services/user/userInfo'
 import allEvents from '@/services/event/allEvents'
@@ -27,6 +27,8 @@ export default function ExplorePage() {
   useEffect(() => {
     const fetcEvent = async () => {
       const data = await allEvents();
+      console.log("data",data);
+      
       setEvent(data);
     };
 
@@ -52,7 +54,7 @@ export default function ExplorePage() {
 
   const filteredEvents = useMemo(() => {
     const now = new Date()
-    return events?.filter((event) => {
+    return events?.filter((event:any) => {
       // Search filter
       if (
         filters.search &&
@@ -146,9 +148,9 @@ export default function ExplorePage() {
         {/* Events Grid */}
         {filteredEvents?.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEvents.map((event) => (
+            {filteredEvents?.map((event:any) => (
               <EventCard
-                key={event.id}
+                key={event?.id}
                 event={event}
                 isSaved={savedEventIds.includes(event.id)}
                 onSave={user ? handleSaveEvent : undefined}

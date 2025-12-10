@@ -5,24 +5,19 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logoutUser } from "@/services/auth/logoutUser";
 import { UserInfo } from "@/types/user.interface";
-import { Settings, User } from "lucide-react";
-import Link from "next/link";
 
 interface UserDropdownProps {
   userInfo: UserInfo;
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
-  const handleLogout = async () => {
-    await logoutUser();
-  };
+  // const handleLogout = async () => {
+  //   await logoutUser();
+  // };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +37,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href={"/my-profile"} className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
@@ -55,7 +50,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             Change Password
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /> */}
         {/* <DropdownMenuItem
           onClick={handleLogout}
           className="cursor-pointer text-red-600"

@@ -2,11 +2,11 @@
 
 import { getCookie } from "../auth/tokenHandlers";
 
-const approveEvent =async (eventId,updatedData) => {
+const approveEvent =async (eventId:string,updatedData:any) => {
    try {
          // Bangla: Client-side cookie থেকে accessToken নিচ্ছি  
          // English: Getting token from client cookies  
-          console.log("from approveEvent",eventId,updatedData);
+          // console.log("from approveEvent",eventId,updatedData);
          const accessToken = await getCookie("accessToken");
      
          if (!accessToken) {
@@ -20,7 +20,7 @@ const approveEvent =async (eventId,updatedData) => {
          // English: Sending API request with eventId  
      
          const response = await fetch(
-           `http://localhost:5000/api/v1/admins/event/${eventId}/approve`,
+           `${process.env.NEXT_PUBLIC_BACKEND_URL}/event/${eventId}/approve`,
            {
              method: "PATCH",
              headers: {

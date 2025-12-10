@@ -2,23 +2,28 @@
 import { Button } from '@/components/ui/button'
 import { revalidatePathFunction } from '@/services/event/eventDetails'
 import saveEvent from '@/services/saveEvent/saveEvent'
-import { Heart, Save } from 'lucide-react'
+import { UserRole } from '@/types'
+import { Heart } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-
-const SaveEventBtn = ({eventId,isSaved,role}) => {
+interface SaveEventBtnProp{
+  eventId:string,
+  isSaved:boolean,
+  role:UserRole
+}
+const SaveEventBtn = ({eventId,isSaved,role}:SaveEventBtnProp) => {
     const [saved,setSaved] = useState(false)
     useEffect(()=>{
         async function fetchData() {
       await revalidatePathFunction(`events/${eventId}`)
         }
         fetchData()
-      },[saved])
+      },[saved,eventId])
     const handleEventSave = async()=>{
         if(isSaved || role !== "USER")return
         setSaved(!saved)
-        console.log("eventId",eventId);
-        console.log("work");
+        // console.log("eventId",eventId);
+        // console.log("work");
         
         const result = await saveEvent(eventId)
         if(result.success){

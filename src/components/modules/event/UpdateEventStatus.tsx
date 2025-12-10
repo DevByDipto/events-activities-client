@@ -24,7 +24,7 @@ const UpdateEventStatus: React.FC<UpdateEventStatusProps> = ({
     try {
         const updatedData = {status:newStatus}
       const result = await updateEvent(eventId, updatedData);
-      console.log("result",result);
+      // console.log("result",result);
       
       if (result.success) {
         toast.success("Event status updated successfully!");

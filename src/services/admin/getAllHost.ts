@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
 import { getCookie } from '../auth/tokenHandlers';
 
 const getAllHost = async() => {
   try {
        const accessToken = await getCookie('accessToken')
-       const res = await fetch("http://localhost:5000/api/v1/admins/all-hosts", {
+       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/all-hosts`, {
          credentials: "include",
             headers: {
         Cookie: `accessToken=${accessToken}`,

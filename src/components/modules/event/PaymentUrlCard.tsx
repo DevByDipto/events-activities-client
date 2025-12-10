@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link'
-
-const PaymentUrlCard = ({payment,isParticipant}) => {
-    console.log("console.log(isParticipant,payment.status);",isParticipant,payment.status);
+interface PaymentUrlCardProp{
+  payment:any,
+  isParticipant:any
+}
+const PaymentUrlCard = ({payment,isParticipant}:PaymentUrlCardProp) => {
+    // console.log("console.log(isParticipant,payment.status);",isParticipant,payment.status);
     
   return (
     <div>

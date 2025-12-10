@@ -3,7 +3,9 @@
 
 const allEvents = async () => {
    try {
-     const res = await fetch("http://localhost:5000/api/v1/events", {
+    console.log("process.env.BACKEND_URL",process.env.NEXT_PUBLIC_BACKEND_URL);
+    
+     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/events`, {
        credentials: "include",
      });
  

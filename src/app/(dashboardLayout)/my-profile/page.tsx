@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+export const dynamic = 'force-dynamic'
 
 import Link from "next/link";
-import { MapPin, Star, Calendar, Mail } from "lucide-react";
+import { MapPin, Star, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import { Badge } from "@/components/shared/Badge"; 
 import { EventCard } from "@/components/shared/EventCard"; 
 import ReviewCard from "@/components/shared/ReviewCard"; 
-import {
 
-  mockReviews,
-} from "@/utils/mockData";
-import { INTEREST_LABELS, } from "@/types";
+import { Event, Interest, INTEREST_LABELS, Review, } from "@/types";
 import userInfo from "@/services/user/userInfo";
 import Image from "next/image";
 import ProfileEdit from "@/components/modules/profile/ProfileEdit";
 import allEvents from "@/services/event/allEvents";
-import getAllEventAndParticipents from "@/services/eventParticipants/getAllEventAndParticipents";
+
 import getAllReview from "@/services/review/getAllReview";
 import getUserEventParticipants from "@/services/eventParticipants/getUserEventParticipants";
 
@@ -36,13 +33,13 @@ const ProfilePage: React.FC = async () => {
 const events = await allEvents()
 const eventParticipants = await getUserEventParticipants()
 const reviewsData = await getAllReview()
-console.log("reviewsData",reviewsData);
-const totalRating = reviewsData?.filter((review)=> review.hostId === user.id).reduce((sum, item) => sum + item.rating, 0);
+// console.log("reviewsData",reviewsData);
+const totalRating = reviewsData?.filter((review:Review)=> review.hostId === user.id).reduce((sum:any, item:any) => sum + item.rating, 0);
 
-console.log(totalRating); // 16
+// console.log(totalRating); // 16
 
 const currentUser = user
-console.log("currentUser",currentUser);
+// console.log("currentUser",currentUser);
 
   // const currentUser = mockUsers.find((u) => u.id === id);
   if (!currentUser) {
@@ -61,12 +58,12 @@ console.log("currentUser",currentUser);
   }
 
   const isOwnProfile = currentUser?.id === currentUser.id;
-  const hostedEvents = events.filter((e) => e.hostId === currentUser.id);
+  const hostedEvents = events.filter((e:any) => e.hostId === currentUser.id);
   const joinedEventIds = eventParticipants
-    .filter((ep) => ep.userId === currentUser.id)
-    .map((ep) => ep.eventId);
-  const joinedEvents = events.filter((e) => joinedEventIds.includes(e.id));
-  const reviews = reviewsData.filter((r) => r.hostId === currentUser.id);
+    .filter((ep:any) => ep.userId === currentUser.id)
+    .map((ep:any) => ep.eventId);
+  const joinedEvents = events.filter((e:any) => joinedEventIds.includes(e.id));
+  const reviews = reviewsData.filter((r:any) => r.hostId === currentUser.id);
 
  
 
@@ -76,7 +73,7 @@ console.log("currentUser",currentUser);
         {/* Profile Header */}
         
         <div className="bg-card rounded-xl border border-border overflow-hidden mb-8">
-          <div className="h-32 md:h-48 bg-gradient-to-r from-primary/20 via-primary/10 to-accent/20" />
+          <div className="h-32 md:h-48 bg-linear-to-r from-primary/20 via-primary/10 to-accent/20" />
           <div className="px-6 pb-6">
             <div className="flex flex-col md:flex-row md:items-end gap-4 -mt-12 md:-mt-16">
               <Image
@@ -139,9 +136,9 @@ console.log("currentUser",currentUser);
 
             {currentUser.interests && currentUser.interests.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
-                {currentUser.interests.map((interest) => (
+                {currentUser.interests.map((interest:any) => (
                   <Badge key={interest} variant="default">
-                    {INTEREST_LABELS[interest]}
+                    {INTEREST_LABELS[interest as Interest]}
                   </Badge>
                 ))}
               </div>
@@ -159,8 +156,8 @@ console.log("currentUser",currentUser);
                   Hosted Events ({hostedEvents.length})
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {hostedEvents.slice(0, 4).map((event) => (
-                    <EventCard key={event.id} event={event} showHost={false} />
+                  {hostedEvents.slice(0, 4).map((event:Event) => (
+                    <EventCard key={event?.id} event={event} showHost={false} />
                   ))}
                 </div>
               </div>
@@ -173,8 +170,8 @@ console.log("currentUser",currentUser);
                   Joined Events ({joinedEvents.length})
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {joinedEvents.slice(0, 4).map((event) => (
-                    <EventCard key={event.id} event={event} />
+                  {joinedEvents.slice(0, 4).map((event:Event) => (
+                    <EventCard key={event?.id} event={event} />
                   ))}
                 </div>
               </div>
@@ -221,7 +218,7 @@ console.log("currentUser",currentUser);
                   Recent Reviews ({reviews.length})
                 </h3>
                 <div className="space-y-4">
-                  {reviews.slice(0, 3).map((review) => (
+                  {reviews.slice(0, 3).map((review:Review) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
                 </div>
@@ -233,7 +230,7 @@ console.log("currentUser",currentUser);
                 <h3 className="text-lg font-semibold text-foreground mb-4">
                   Contact
                 </h3>
-                <Button className="w-full" leftIcon={<Mail className="w-4 h-4" />}>
+                <Button className="w-full">
                   Send Message
                 </Button>
               </div>

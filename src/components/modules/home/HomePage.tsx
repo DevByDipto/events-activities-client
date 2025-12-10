@@ -4,9 +4,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  Calendar,
   Users,
-  MapPin,
   Star,
   ArrowRight,
   Search,
@@ -18,16 +16,16 @@ import {
   Laptop,
   Utensils,
   Bike,
-  CheckCircle,
   Shield,
   Heart,
   Zap,
 } from 'lucide-react'
 import { Button } from '../../shared/Button'
 import { EventCard } from '../../shared/EventCard'
-import { mockEvents, mockUsers, mockReviews } from '../../../utils/mockData'
+import { mockUsers, mockReviews } from '../../../utils/mockData'
 import allEvents from '@/services/event/allEvents'
 import userInfo from '@/services/user/userInfo'
+import { Event } from '@/types'
 
 export async function HomePage() { 
   // const [events, setEvent] = useState<any>(null);
@@ -42,7 +40,7 @@ export async function HomePage() {
 
   //   fetcEvent();
   // }, []);
-  const featuredEvents = events?.filter((e) => e.isFeatured && e.status === 'OPEN')
+  const featuredEvents = events?.filter((e:any) => e.isFeatured && e.status === 'OPEN')
     .slice(0, 6)
 
   const topHosts = mockUsers
@@ -105,7 +103,7 @@ export async function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/10 py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-linear-to-br from-primary/5 via-background to-accent/10 py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -114,7 +112,7 @@ export async function HomePage() {
                 <span className="text-primary block">Activity Companions</span>
               </h1>
               <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-                Connect with like-minded people for concerts, hiking trips, board game nights, tech meetups, and more. Never miss out on experiences because you don't have someone to go with.
+                Connect with like-minded people for concerts, hiking trips, board game nights, tech meetups, and more. Never miss out on experiences because you donot have someone to go with.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -232,8 +230,8 @@ export async function HomePage() {
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredEvents?.map((event) => (
-              <EventCard key={event.id} event={event} />
+            {featuredEvents?.map((event:Event) => (
+              <EventCard key={event?.id} event={event} />
             ))}
           </div>
         </div>
@@ -271,7 +269,7 @@ export async function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Top-Rated Hosts</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Meet our community's most loved event organizers
+              Meet our communitys most loved event organizers
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -321,11 +319,11 @@ export async function HomePage() {
                     />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-4">"{review.comment}"</p>
+                <p className="text-muted-foreground mb-4">{review.comment}</p>
                 <div className="flex items-center gap-3">
                   <Image
                     src={review.reviewer?.image || 'https://via.placeholder.com/40'}
-                    alt={review.reviewer?.name}
+                    alt={review?.reviewer?.name as string}
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-full object-cover"
@@ -347,7 +345,7 @@ export async function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Choose EventHub</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-              We're committed to helping you find meaningful connections through shared experiences
+              We are committed to helping you find meaningful connections through shared experiences
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

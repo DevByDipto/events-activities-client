@@ -9,7 +9,7 @@ const eventDetails = async (id:string) => {
   try {
     // console.log("eventDetails",id);
    const accessToken = await getCookie('accessToken')
- const res = await fetch(`http://localhost:5000/api/v1/events/${id}`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${id}`, {
       credentials: "include",
        headers: {
       Cookie: `accessToken=${accessToken}`,

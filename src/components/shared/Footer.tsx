@@ -159,11 +159,11 @@ export function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="w-4 h-4 flex-shrink-0" />
+                <MapPin className="w-4 h-4 shrink-0" />
                 <span>123 Event Street, San Francisco, CA 94102</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="w-4 h-4 flex-shrink-0" />
+                <Mail className="w-4 h-4 shrink-0" />
                 <a
                   href="mailto:hello@eventhub.com"
                   className="hover:text-foreground transition-colors"
@@ -172,7 +172,7 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="w-4 h-4 flex-shrink-0" />
+                <Phone className="w-4 h-4 shrink-0" />
                 <a
                   href="tel:+1234567890"
                   className="hover:text-foreground transition-colors"

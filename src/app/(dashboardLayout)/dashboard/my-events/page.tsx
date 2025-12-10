@@ -70,17 +70,18 @@
 // };
 
 // export default MyEventPage
-
+// export const dynamic = 'force-dynamic'
 import EventFilters from "@/components/modules/event/EventFilters";
-import ReviewModal from "@/components/modules/review/ReviewModal";
 import getAllEventAndParticipents from "@/services/eventParticipants/getAllEventAndParticipents";
 import getAllReview from "@/services/review/getAllReview";
-import userInfo from "@/services/user/userInfo";
-
+import userInfo from "@/services/user/userInfo"; 
+export const dynamic = 'force-dynamic'
 const MyEventPage = async () => {
-  const eventAndParticipents = await getAllEventAndParticipents();
-  const reviews = await getAllReview();
-  const user = await userInfo();
+  const eventAndParticipents = await getAllEventAndParticipents() 
+  console.log("eventAndParticipents",eventAndParticipents)
+  
+  const reviews = await getAllReview() 
+  const user = await userInfo() 
 
   if (eventAndParticipents.length === 0) {
     return (

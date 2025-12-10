@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import EditProfileModal from '@/components/shared/EditProfileModal'
 import { Button } from '@/components/ui/button'
 import { revalidatePathFunction } from '@/services/event/eventDetails'
 import updateUserProfile from '@/services/user/updateUserProfile'
 import { User } from '@/types'
-import { Edit } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const ProfileEdit = ({isOwnProfile,currentUser,}) => {
+interface ProfileEditProp{
+  isOwnProfile:boolean,currentUser:any
+}
+const ProfileEdit = ({isOwnProfile,currentUser}:ProfileEditProp) => {
       const [isEditModalOpen, setIsEditModalOpen] = useState(false);
        const [isLoading, setIsLoading] = useState(false);
         useEffect(()=>{
@@ -20,7 +23,7 @@ const ProfileEdit = ({isOwnProfile,currentUser,}) => {
 
  const handleSaveProfile =async (updates: Partial<User>) => {
     if (isOwnProfile) {
-        console.log(updates);
+        // console.log(updates);
         
       const result = await updateUserProfile(updates)
       console.log("result",result);
@@ -33,7 +36,6 @@ const ProfileEdit = ({isOwnProfile,currentUser,}) => {
           {isOwnProfile && (
                 <Button
                   variant="outline"
-                  leftIcon={<Edit className="w-4 h-4" />}
                   onClick={() => setIsEditModalOpen(true)}
                 >
                   Edit Profile

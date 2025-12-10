@@ -5,9 +5,6 @@ import {
   Review,
   EventParticipant,
   SavedEvent,
-  UserRole,
-  EventType,
-  EventStatus,
 } from '../types/index'
 
 

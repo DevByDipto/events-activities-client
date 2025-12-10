@@ -14,6 +14,7 @@ import { Event, eventTypes } from "@/types";
 import { toast } from "sonner";
 import updateEvent from "@/services/event/updateEvent";
 import { revalidatePathFunction } from "@/services/event/eventDetails";
+import Image from "next/image";
 
 const UpdateEventModal = ({ event }: { event: Event }) => {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ const UpdateEventModal = ({ event }: { event: Event }) => {
     });
 
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
 
     if (data.data?.url) {
       setImageUrl(data.data.url); // <-- data.data.url ব্যবহার করতে হবে
@@ -201,10 +202,12 @@ const UpdateEventModal = ({ event }: { event: Event }) => {
                   ) : null}
 
                   {imageUrl && !uploading && (
-                    <img
+                    <Image
                       src={imageUrl}
                       alt="Event"
                       className="w-32 mt-2 rounded"
+                       height={100}
+          width={100}
                     />
                   )}
                 </div>

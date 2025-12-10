@@ -179,7 +179,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import creatEvent from "@/services/event/creatEvent";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { eventTypes } from "@/types";
 
 const CreatEventPage = () => {

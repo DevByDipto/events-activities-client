@@ -2,6 +2,7 @@
 
 import React from "react";
 import { User } from "@/types";
+import Image from "next/image";
 
 interface ParticipantsListProps {
   participants: User[];
@@ -25,38 +26,40 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
     },
     md: {
       avatar: "w-10 h-10",
-      text: "text-sm",
-      overlap: "-ml-3",
-    },
-    lg: {
-      avatar: "w-12 h-12",
-      text: "text-base",
-      overlap: "-ml-4",
-    },
-  };
-
-  const { avatar, text, overlap } = sizes[size];
-
-  if (participants?.length === 0) {
-    return <p className="text-muted-foreground text-sm">No participants yet</p>;
-  }
-
-  return (
-    <div className="flex items-center">
-      <div className="flex">
-        {displayedParticipants?.map((participant, index) => (
-          <div
+      text: "text-sm", 
+      overlap: "-ml-3", 
+    }, 
+    lg: { 
+      avatar: "w-12 h-12", 
+      text: "text-base", 
+      overlap: "-ml-4", 
+    }, 
+  }; 
+ 
+  const { avatar, text, overlap } = sizes[size]; 
+ 
+  if (participants?.length === 0) { 
+    return <p className="text-muted-foreground text-sm">No participants yet</p>; 
+  } 
+ 
+  return ( 
+    <div className="flex items-center"> 
+      <div className="flex"> 
+        {displayedParticipants?.map((participant, index) => ( 
+          <div 
             key={participant.id}
             className={`${avatar} rounded-full border-2 border-background overflow-hidden ${
               index > 0 ? overlap : ""
             }`}
             style={{ zIndex: maxDisplay - index }}
           >
-            <img
+            <Image
               src={participant.image || "https://via.placeholder.com/40"}
               alt={participant.name}
               className="w-full h-full object-cover"
               title={participant.name}
+               height={100}
+          width={100}
             />
           </div>
         ))}

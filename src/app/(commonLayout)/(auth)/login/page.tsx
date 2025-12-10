@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LoginForm from "@/components/LoginForm"; 
 
-const LoginPage =async ({searchParams}) => {
+const LoginPage =async ({searchParams}:{searchParams:any}) => {
   const params = await searchParams
   
   return (

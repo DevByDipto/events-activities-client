@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import getPaymentsForHost from "@/services/payment/getPaymentsForHost";
+import { Payment } from "@/types";
 
-
+export const dynamic = 'force-dynamic'
 
 const PaymentsTable = async() => {
 
@@ -33,7 +34,7 @@ const PaymentsTable = async() => {
         </thead>
 
         <tbody>
-          {payments.map((payment, index) => (
+          {payments.map((payment:Payment, index:string) => (
             <tr key={payment.id}>
               <th>{index + 1}</th>
 
@@ -44,7 +45,7 @@ const PaymentsTable = async() => {
               <td>{payment.event?.name || "Unknown Event"}</td>
 
               {/* Amount */}
-              <td>${payment.event.joiningFee}</td>
+              <td>${payment?.event?.joiningFee}</td>
 
               {/* Payment Status with color */}
               <td

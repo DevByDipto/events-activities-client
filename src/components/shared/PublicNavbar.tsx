@@ -1,64 +1,65 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import {
   Menu,
   X,
   Calendar,
   User,
-  LogOut,
   Plus,
   LayoutDashboard,
   Users,
   Shield,
   Compass,
-  User2,
   Circle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import LogoutButton from "./LogoutButton";
 import userInfo from "@/services/user/userInfo";
-import { revalidatePathFunction } from "@/services/event/eventDetails";
 import { getCookie } from "@/services/auth/tokenHandlers";
+import { logoutUser } from "@/services/auth/logoutUser";
 
 export default function PublikkNavbar() {
-  
   const pathname = usePathname();
 
   const [user, setUser] = useState<any>(null);
-        const [isStatusChange, setIsStatusChange] = useState(false);
-        const [accessToken, setAccessToken] = useState<any>();
+  // console.log("user", user);
 
-console.log("user",accessToken);
-useEffect(()=>{
-          async function fetchData() {
-      const result = await getCookie("accessToken")
-setAccessToken(result)
-          }
-          fetchData()
-        },[accessToken])
+  const [accessToken, setAccessToken] = useState<any>();
+
+  // console.log("user",accessToken);
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getCookie("accessToken");
+      setAccessToken(result);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!accessToken) {
+        setUser(null); // logged out
+        return;
+      }
       const data = await userInfo();
       setUser(data);
     };
-
     fetchUser();
-  }, []);
-  
+  }, [accessToken]);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
- 
- let isAuthenticated : boolean
- if(accessToken){
-   isAuthenticated = true;
-  }else{
+
+  let isAuthenticated: boolean;
+  if (accessToken) {
+    isAuthenticated = true;
+  } else {
     isAuthenticated = false;
   }
+  // console.log("accessToken", accessToken);
 
   const isActive = (path: string) => pathname === path;
 
@@ -68,7 +69,25 @@ setAccessToken(result)
         ? "bg-primary text-primary-foreground"
         : "text-foreground hover:bg-accent hover:text-accent-foreground"
     }`;
+const handleLogout = async () => {
+  try {
+    // Server-side cookie delete
+  
+    
+    // Client-side state clear করুন
+    setAccessToken(null);
+    setUser(null);
+    console.log("after logout");
+    
+      await logoutUser();
+          console.log("befor logout");
 
+    // Manual redirect
+
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
   const renderNavLinks = () => {
     if (!isAuthenticated) {
       return (
@@ -127,7 +146,10 @@ setAccessToken(result)
             Explore Events
           </Link>
 
-          <Link href="/host/dashboard/my-events" className={linkClass("/dashboard")}>
+          <Link
+            href="/host/dashboard/my-events"
+            className={linkClass("/dashboard")}
+          >
             <Calendar className="w-4 h-4" />
             My Events (Hosted)
           </Link>
@@ -159,11 +181,9 @@ setAccessToken(result)
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="flex items-center justify-between h-16">
-
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -187,16 +207,15 @@ setAccessToken(result)
                 >
                   <User className="w-4 h-4" />
                   Profile
-                </Link> 
-                <Link
-                  href={`/community`}
-                  className={linkClass(`/Community`)}
-                >
+                </Link>
+                <Link href={`/community`} className={linkClass(`/Community`)}>
                   <Circle className="w-4 h-4" />
                   Community
-                </Link> 
-
-               <LogoutButton setAccessToken={setAccessToken}/>
+                </Link>
+ <Button variant={"destructive"} onClick={handleLogout}>
+      Logout
+    </Button>
+                {/* <LogoutButton setAccessToken={setAccessToken} /> */}
               </>
             ) : (
               <>
@@ -253,8 +272,10 @@ setAccessToken(result)
                     <Circle className="w-4 h-4" />
                     Community
                   </Link>
-
-                   <LogoutButton setAccessToken={setAccessToken}/>
+ <Button variant={"destructive"} onClick={handleLogout}>
+      Logout
+    </Button>
+                  {/* <LogoutButton setAccessToken={setAccessToken} /> */}
                 </>
               ) : (
                 <>
@@ -275,16 +296,13 @@ setAccessToken(result)
                   </Link>
                 </>
               )}
-
             </div>
           </div>
         )}
-        
       </div>
     </nav>
   );
 }
-
 
 // -----------------------
 
@@ -296,11 +314,10 @@ setAccessToken(result)
 // import { getCookie } from "@/services/auth/tokenHandlers";
 // import userInfo from "@/services/user/userInfo";
 
-
 // const PublicNavbar = async () => {
 //   const navItems = [
 //     { href: "#", label: "Explore Events" },
-//     { href: "#", label: "Become a Host" }, 
+//     { href: "#", label: "Become a Host" },
 //     { href: "#", label: "My Events" },
 //     { href: "#", label: "Profile" },
 //     { href: "#", label: "Create Event" },
@@ -309,7 +326,7 @@ setAccessToken(result)
 //   const user = await userInfo()
 //   // console.log("userrrrr",user);
 //   // console.log("accessToken",accessToken);
-  
+
 //   return (
 //     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
 //       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -331,14 +348,13 @@ setAccessToken(result)
 
 //         <div className="hidden md:flex items-center space-x-2">
 // {
-//   accessToken ?   <LogoutButton/> 
-//           :         
+//   accessToken ?   <LogoutButton/>
+//           :
 //     <Link href="/login" className="text-lg font-medium">
 //             <Button>Login</Button>
-//           </Link> 
+//           </Link>
 // }
-          
-       
+
 //         </div>
 
 //         {/* Mobile Menu */}
@@ -364,10 +380,10 @@ setAccessToken(result)
 //                   <div className="flex justify-center"></div>
 //                   {
 //   accessToken ?    <LogoutButton/>
-//           :         
+//           :
 //     <Link href="/login" className="text-lg font-medium">
 //             <Button>Login</Button>
-//           </Link> 
+//           </Link>
 // }
 //                 </div>
 //               </nav>

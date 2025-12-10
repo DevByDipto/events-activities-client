@@ -2,11 +2,11 @@
 import { getCookie } from '../auth/tokenHandlers';
 
 const saveEvent = async(eventId:string) => {
-  console.log("eventIdeventIdeventId",eventId);
+  // console.log("eventIdeventIdeventId",eventId);
   
     try {
         const accessToken = await getCookie('accessToken')
-       const response = await fetch(`http://localhost:5000/api/v1/save-events/${eventId}`, {
+       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/save-events/${eventId}`, {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',

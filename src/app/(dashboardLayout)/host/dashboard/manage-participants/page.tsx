@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import getAllEventAndParticipants from "@/services/eventParticipants/getAllEventAndParticipents";
 import userInfo from "@/services/user/userInfo";

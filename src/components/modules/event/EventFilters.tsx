@@ -3,14 +3,20 @@
 
 import { useState } from "react";
 import ReviewModal from "@/components/modules/review/ReviewModal";
+import { EventParticipant, Review, User } from "@/types";
 
-const EventFilters = ({ eventAndParticipents, reviews, user }: any) => {
+interface EventFiltersProps {
+  eventAndParticipents:EventParticipant[]
+  reviews:Review[]
+  user:User
+}
+const EventFilters = ({ eventAndParticipents, reviews, user }: EventFiltersProps) => {
   const [filter, setFilter] = useState<"UPCOMING" | "PAST">("UPCOMING");
 
   const now = new Date();
 
-  const filteredEvents = eventAndParticipents.filter((item: any) => {
-    const eventDate = new Date(item.event.dateTime);
+  const filteredEvents = eventAndParticipents?.filter((item) => {
+    const eventDate = new Date(item.event?.dateTime || "");
 
     if (filter === "UPCOMING") {
       return eventDate >= now;

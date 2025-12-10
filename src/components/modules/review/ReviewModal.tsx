@@ -37,20 +37,20 @@ const result = await creatReview({
   reviewData: data
 });    
 setIsSubmit(true)
-console.log(result);
+// console.log(result);
 
 if(result.success){
     toast.success("review submite successfull")
 }
     
-    console.log("Review submitted:", { rating, comment });
+    // console.log("Review submitted:", { rating, comment });
 
     setOpen(false);
   };
 
-  const alreadyReviewed = reviews.some(
+  const alreadyReviewed = reviews?.some(
   (review) =>
-    review.eventId === event.id && review.reviewerId === user.id
+    review.eventId === event.id && review.reviewerId === user?.id
 );
   return (<>
   {

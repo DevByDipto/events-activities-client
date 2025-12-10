@@ -1,14 +1,20 @@
    "use client"
 import { Button } from '@/components/ui/button'
-import { fatchFunction, revalidatePathFunction } from '@/services/event/eventDetails';
+import { revalidatePathFunction } from '@/services/event/eventDetails';
 import eventJoining from '@/services/event/eventJoning';
 import leaveEvent from '@/services/event/leaveEvent';
+import { Event } from '@/types';
 import { CheckCircle, XCircle } from 'lucide-react'
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+interface EventEnrollCardProp{
+  isHost:boolean,
+  isParticipant:boolean,
+  event:Event,
+  id:string
+}
 
-
-   const EventEnrollCard = ({isHost,isParticipant,event,isAuthenticated,id}) => {
+   const EventEnrollCard = ({isHost,isParticipant,event,id}:EventEnrollCardProp) => {
   const [isJoining, setIsJoining] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
     //   const router = useRouter();
@@ -30,8 +36,13 @@ import { toast } from 'sonner';
     //     },
     //   },
     // });
-    toast.success("Successfully joined the event!!")
+    if (result.success) {
+      toast.success("Successfully joined the event!!")
     setIsJoining(false);
+    }else{
+      toast.error("opps! can't joined the event!!")
+    }
+    
     // revalidatePathFunction(`events/${id}`)
     // console.log("eventJoining result",result.paymentUrl);
     
@@ -48,10 +59,15 @@ import { toast } from 'sonner';
 
   const handleLeave = async () => {
     setIsLeaving(true);
-    const resutl = await leaveEvent(id)
-    setIsLeaving(false);
+    const result = await leaveEvent(id)
+      if (result.success) {
+      setIsLeaving(false);
     
     toast.success("Successfully left the event")
+    }else{
+      toast.error("opps! can't left the event!!")
+    }
+   
   };
      return (
        <div>
@@ -75,7 +91,7 @@ import { toast } from 'sonner';
                   <div className="flex items-center gap-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
                     <CheckCircle className="w-5 h-5 text-green-600" />
                     <span className="text-green-700 dark:text-green-400 font-medium">
-                      You're attending this event
+                      You are attending this event
                     </span>
                   </div>
                   <Button

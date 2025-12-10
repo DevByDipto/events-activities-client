@@ -63,7 +63,7 @@ const role = becomeHost ? "HOST" : "USER";
 
         // newFormData.append("data", JSON.stringify(registerData));
 
-        const res = await fetch("http://localhost:5000/api/v1/users/register", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json", 

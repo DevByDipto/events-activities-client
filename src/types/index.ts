@@ -123,6 +123,8 @@ export interface EventParticipant {
   userId: string
   user?: User
   createdAt: Date
+
+
 }
 
 // Saved Event Interface
@@ -174,6 +176,7 @@ export const EVENT_TYPE_LABELS: Record<EventType, string> = {
   BOOK_CLUB: 'Book Club',
   NETWORKING_EVENT: 'Networking Event',
 }
+
 
 // Event Status Labels
 export const EVENT_STATUS_LABELS: Record<EventStatus, string> = {

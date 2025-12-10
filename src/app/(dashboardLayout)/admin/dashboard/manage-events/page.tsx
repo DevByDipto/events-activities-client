@@ -2,6 +2,7 @@
 
 import EventApproval from "@/components/modules/admin/EventApproval";
 import allEvents from "@/services/event/allEvents";
+import { Event } from "@/types";
 
 
 const EventsTable =async () => {
@@ -25,12 +26,12 @@ const events = await allEvents()
         </thead>
 
         <tbody>
-          {events.map((event, index) => (
+          {events.map((event:Event, index:string) => (
             <tr key={event.id} className="border-b text-center">
               <td>{index + 1}</td>
               <td>{event.name}</td>
               <td>{event.location}</td>
-              <td>{new Date(event.date).toLocaleDateString()}</td>
+              <td>{new Date(event?.dateTime).toLocaleDateString()}</td>
               <td>{event.host?.name || "N/A"}</td>
 
               <td>

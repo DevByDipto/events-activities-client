@@ -11,9 +11,7 @@ import {
   DollarSign,
   Star,
   Clock,
-  ArrowLeft,
-  Share2,
-  Heart,
+
 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,24 +20,22 @@ import ParticipantsList from "@/components/shared/ParticipantsList";
 import ReviewCard from "@/components/shared/ReviewCard";
 import {
 
-  mockEventParticipants,
-  mockReviews,
   getUserById,
 } from "@/utils/mockData";
-import { EVENT_TYPE_LABELS, EVENT_STATUS_LABELS } from "@/types";
+import { EVENT_TYPE_LABELS, EVENT_STATUS_LABELS, EventType, Review } from "@/types";
 import userInfo from "@/services/user/userInfo";
 import eventDetails from "@/services/event/eventDetails";
 import getAllEventAndParticipents, {
-  checkParticipation,
+
 } from "@/services/eventParticipants/getAllEventAndParticipents";
 import EventEnrollCard from "@/components/modules/event/EventEnrollCard";
 import { getCookie } from "@/services/auth/tokenHandlers";
 import getSinglePayments from "@/services/payment/getSinglePayments";
-import PaymentUrlCard from "@/components/modules/event/PaymentUrlCard";
 import SaveEventBtn from "@/components/modules/event/SaveEventBtn";
 import getAllSaveEvent from "@/services/saveEvent/getAllSaveEvent";
 import getUserEventParticipants from "@/services/eventParticipants/getUserEventParticipants";
 import getAllReview from "@/services/review/getAllReview";
+import Image from "next/image";
 
 interface EventPageProps {
   params: {
@@ -71,7 +67,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   const eventAndParticipents = await getAllEventAndParticipents();
   const UserEventAndParticipents = await getUserEventParticipants();
   const reviewsData = await getAllReview();
-  console.log("eventAndParticipents",eventAndParticipents);
+  // console.log("eventAndParticipents",eventAndParticipents);
   
   let savedEvents;
   let isSaved = false
@@ -137,16 +133,16 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   }
 
   const host = getUserById(event.hostId);
-  const participants = eventAndParticipents?.filter((ep) => ep.event.id === event.id)
-    .map((ep) => ep.user!)
+  const participants = eventAndParticipents?.filter((ep:any) => ep.event.id === event.id)
+    .map((ep:any) => ep.user!)
     .filter(Boolean);
-    console.log("participants",participants);
+    // console.log("participants",participants);
     
-  const reviews = reviewsData?.filter((r) => r.hostId === event.hostId)
+  const reviews = reviewsData?.filter((r:any) => r.hostId === event.hostId)
     .slice(0, 3);
   const isParticipant = user
     ? UserEventAndParticipents.some(
-        (ep) => ep.eventId === event.id && ep.userId === user.id
+        (ep:any) => ep.eventId === event.id && ep.userId === user.id
       )
     : false;
   const isHost = user?.id === event.hostId;
@@ -157,6 +153,8 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
     CANCELLED: "error",
     COMPLETED: "info",
   } as const;
+
+ type EventStatus = keyof typeof statusVariant;
 
   const formatDate = (date: Date) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -176,12 +174,14 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
     <div className="min-h-screen bg-background">
       {/* Hero Image */}
       <div className="relative h-64 md:h-96">
-        <img
+        <Image
           src={event.image}
           alt={event.name}
           className="w-full h-full object-cover"
+          height={100}
+          width={100}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
         <div className="absolute top-4 left-4">
           <Link href="/explore">
             <Button
@@ -209,11 +209,11 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
             {/* Event Header */}
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-3">
-                <Badge variant={statusVariant[event.status]}>
-                  {EVENT_STATUS_LABELS[event.status]}
+                <Badge variant={statusVariant[event.status as EventStatus]}>
+                  {EVENT_STATUS_LABELS[event.status as EventStatus]}
                 </Badge>
                 <Badge variant="default">
-                  {EVENT_TYPE_LABELS[event.eventType]}
+                  {EVENT_TYPE_LABELS[event.eventType as EventType]}
                 </Badge>
                 {event.isFeatured && (
                   <Badge variant="warning">
@@ -325,7 +325,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                   Host Reviews
                 </h2>
                 <div className="space-y-4">
-                  {reviews.map((review) => (
+                  {reviews.map((review:Review) => (
                     <ReviewCard key={review.id} review={review} />
                   ))}
                 </div>
@@ -344,10 +344,12 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                   href={`/profile/${host.id}`}
                   className="flex items-center gap-4 p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
                 >
-                  <img
+                  <Image
                     src={host.image || "https://via.placeholder.com/60"}
                     alt={host.name}
                     className="w-14 h-14 rounded-full object-cover"
+                    height={100}
+                    width={100}
                   />
                   <div>
                     <p className="font-medium text-foreground">{host.name}</p>
@@ -379,8 +381,8 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                   </p>
                   <p className="text-sm text-muted-foreground">per person</p>
                 </div>
-                <Badge variant={statusVariant[event.status]} size="md">
-                  {EVENT_STATUS_LABELS[event.status]}
+                <Badge variant={statusVariant[event.status as EventStatus]} size="md">
+                  {EVENT_STATUS_LABELS[event.status as EventStatus] }
                 </Badge>
               </div>
 
@@ -406,7 +408,6 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                 isHost={isHost}
                 isParticipant={isParticipant}
                 event={event}
-                isAuthenticated={isAuthenticated}
                 id={id}
               />
        

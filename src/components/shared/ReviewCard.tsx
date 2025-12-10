@@ -3,6 +3,7 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { Review } from "@/types";
+import Image from "next/image";
 
 interface ReviewCardProps {
   review: Review;
@@ -20,10 +21,12 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   return (
     <div className="bg-card rounded-lg border border-border p-4">
       <div className="flex items-start gap-3">
-        <img
+        <Image
           src={review.reviewer?.image || "https://via.placeholder.com/40"}
           alt={review.reviewer?.name || "Reviewer"}
           className="w-10 h-10 rounded-full object-cover"
+           height={100}
+          width={100}
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">

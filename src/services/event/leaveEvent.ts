@@ -18,7 +18,7 @@ const leaveEvent = async (eventId: string) => {
     // English: Sending API request with eventId  
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/events/${eventId}/leave`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${eventId}/leave`,
       {
         method: "DELETE",
         headers: {
@@ -41,7 +41,7 @@ const leaveEvent = async (eventId: string) => {
 
     const data = await response.json();
 
-    return data.data
+    return data
   } catch (error: any) {
     return {
       success: false,

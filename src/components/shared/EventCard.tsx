@@ -62,12 +62,13 @@ export function EventCard({
       className="group block bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-16/10 overflow-hidden">
         <Image
           src={event.image}
           alt={event.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
+         
         />
         <div className="absolute top-3 left-3 flex gap-2">
           <Badge variant={statusVariant[event.status]} size="sm">
@@ -107,16 +108,16 @@ export function EventCard({
 
         <div className="space-y-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 flex-shrink-0" />
+            <Calendar className="w-4 h-4 shrink-0" />
             <span className="truncate">{formatDate(event.dateTime)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 flex-shrink-0" />
+            <MapPin className="w-4 h-4 shrink-0" />
             <span className="truncate">{event.location}</span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 flex-shrink-0" />
+              <Users className="w-4 h-4 shrink-0" />
               <span>
                 {event.currentParticipants}/{event.maxParticipants}
               </span>

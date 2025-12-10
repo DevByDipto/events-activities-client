@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCookie } from '../auth/tokenHandlers';
 
-const blockUser =async (updatedData,accountId) => {
+const blockUser =async (updatedData:any,accountId:string) => {
    try {
         // Bangla: Client-side cookie থেকে accessToken নিচ্ছি  
         // English: Getting token from client cookies  
@@ -18,7 +18,7 @@ const blockUser =async (updatedData,accountId) => {
         // English: Sending API request with eventId  
     
         const response = await fetch(
-          `http://localhost:5000/api/v1/admins/accounts/${accountId}/block`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/accounts/${accountId}/block`,
           {
             method: "PATCH",
             headers: {

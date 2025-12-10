@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCookie } from "../auth/tokenHandlers";
-
-const creatReview =async ({eventId,reviewData}) => {
+interface creatReview{
+  eventId:string,
+  reviewData:any
+}
+const creatReview =async ({eventId,reviewData}:creatReview) => {
   try {
       const accessToken = await getCookie('accessToken')
-     const response = await fetch(`http://localhost:5000/api/v1/reviews/${eventId}`, {
+     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reviews/${eventId}`, {
        method: 'POST',
        headers: {
          'Content-Type': 'application/json',

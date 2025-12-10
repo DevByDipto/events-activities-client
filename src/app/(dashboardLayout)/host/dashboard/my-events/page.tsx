@@ -81,7 +81,7 @@
 
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+export const dynamic = 'force-dynamic'
 import getHostCreatedAllEvents from "@/services/host/getHostCreatedAllEvents";
 import EventFilterClient from "@/components/modules/event/EventFilterClient";
 

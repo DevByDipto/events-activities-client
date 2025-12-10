@@ -5,7 +5,11 @@ import { getCookie } from "../auth/tokenHandlers";
 const userInfo = async () => {
   try {
       const accessToken = await getCookie('accessToken')
-    const res = await fetch("http://localhost:5000/api/v1/users/me", {
+       if (!accessToken) {
+      console.log("No access token found");
+      return {}
+    }
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/me`, {
       credentials: "include",
        headers: {
       Cookie: `accessToken=${accessToken}`,
@@ -20,6 +24,7 @@ const userInfo = async () => {
       // }
       // এখানেই HTTP error detect হবে
       const errorData = await res.json();
+      // return {}
       throw new Error(errorData.message || "Request failed");
     }
 const user = await res.json();

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
+import { isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import z from "zod";
 import { setCookie } from "./tokenHandlers";
+import z from "zod";
 
 const loginValidationZodSchema = z.object({
     email: z.email({
@@ -44,7 +43,7 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             }
         }
 
-        const res = await fetch("http://localhost:5000/api/v1/auth/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {

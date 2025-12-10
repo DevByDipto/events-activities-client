@@ -8,5 +8,7 @@ export const logoutUser= async()=>{
 await deleteCookie("accessToken")
 await deleteCookie("refreshToken")
 // await revalidatePathFunction(`/`)
- redirect("/login?loggedOut=true");
+redirect("/login?loggedOut=true");
+
+// return { success: true };
 }

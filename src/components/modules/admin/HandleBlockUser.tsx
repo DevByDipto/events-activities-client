@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import blockUser from '@/services/admin/blockUser';
 import { revalidatePathFunction } from '@/services/event/eventDetails';
+import { User } from '@/types';
 import React, { useEffect, useState } from 'react'
 import { toast } from "sonner";
 
-const HandleBlockUser = ({user}) => {
-  console.log();
+const HandleBlockUser = ({user}:{user:User}) => {
+  // console.log();
   
       const [isStatusChange, setIsStatusChange] = useState(false);
 
@@ -16,7 +18,7 @@ const HandleBlockUser = ({user}) => {
           fetchData()
         },[isStatusChange])
 
-     const handleBlock = async (id, currentStatus) => {
+     const handleBlock = async (id:string, currentStatus:any) => {
     try {
         
         const updateData= {isBlocked:!currentStatus}
@@ -35,7 +37,7 @@ setIsStatusChange(!isStatusChange)
   };
   return (
     <button
-                  onClick={() => handleBlock(user.id, user.isBlocked)}
+                  onClick={() => handleBlock(user?.id, user?.isBlocked)}
                   className={`px-2 my-2  rounded text-white ${
                     user?.isBlocked ? "bg-green-600" : "bg-red-600"
                   }`}

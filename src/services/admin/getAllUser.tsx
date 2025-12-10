@@ -4,7 +4,7 @@ import { getCookie } from '../auth/tokenHandlers';
 const getAllUser = async() => {
 try {
      const accessToken = await getCookie('accessToken')
-     const res = await fetch("http://localhost:5000/api/v1/admins/all-user", {
+     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/all-user`, {
        credentials: "include",
           headers: {
       Cookie: `accessToken=${accessToken}`,

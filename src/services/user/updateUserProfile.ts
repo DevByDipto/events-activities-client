@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
 import { getCookie } from '../auth/tokenHandlers';
 
-const updateUserProfile = async(updatedData) => {
+const updateUserProfile = async(updatedData:any) => {
    try {
      // Bangla: Client-side cookie থেকে accessToken নিচ্ছি  
      // English: Getting token from client cookies  
@@ -19,7 +18,7 @@ const updateUserProfile = async(updatedData) => {
      // English: Sending API request with eventId  
  
      const response = await fetch(
-       `http://localhost:5000/api/v1/users/updateMyProfie`,
+       `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/updateMyProfie`,
        {
          method: "PATCH",
          headers: {
