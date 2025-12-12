@@ -10,7 +10,7 @@ const getAllReview =async () => {
      if (!res.ok) {
        // এখানেই HTTP error detect হবে
        const errorData = await res.json();
-       return []
+      //  return []
        throw new Error(errorData.message || "can not find review somthing went worng!");
      }
  const result = await res.json();
@@ -18,6 +18,7 @@ const getAllReview =async () => {
      return result.data
  
    } catch (error: any) {
+    console.log(error);
      return { success: false, message: error.message };
    }
 }

@@ -8,7 +8,9 @@ const creatEvent = async(eventData:any) => {
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
-            Cookie: `accessToken=${accessToken}`,
+            // Cookie: `accessToken=${accessToken}`,
+                   "Authorization": `Bearer ${accessToken}`,
+
          },
          credentials: 'include',
          // যদি request body দরকার হয়, যেমন user info:
@@ -22,6 +24,7 @@ const creatEvent = async(eventData:any) => {
        const data = await response.json();
        return data;
      } catch (error: any) {
+      console.log(error);
         return { success: false, message: error.message };
       }
 }

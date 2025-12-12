@@ -11,7 +11,9 @@ const creatReview =async ({eventId,reviewData}:creatReview) => {
        method: 'POST',
        headers: {
          'Content-Type': 'application/json',
-          Cookie: `accessToken=${accessToken}`,
+          // Cookie: `accessToken=${accessToken}`,
+                 "Authorization": `Bearer ${accessToken}`,
+
        },
        credentials: 'include',
        // যদি request body দরকার হয়, যেমন user info:
@@ -25,6 +27,7 @@ const creatReview =async ({eventId,reviewData}:creatReview) => {
      const data = await response.json();
      return data;
    } catch (error: any) {
+    console.log(error);
       return { success: false, message: error.message };
     }
 }

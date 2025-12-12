@@ -16,7 +16,7 @@ import updateEvent from "@/services/event/updateEvent";
 import { revalidatePathFunction } from "@/services/event/eventDetails";
 import Image from "next/image";
 
-const UpdateEventModal = ({ event }: { event: Event }) => {
+const UpdateEventModal = ({ event ,isApproved}: { event: Event,isApproved:boolean }) => {
   const [open, setOpen] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [imageUrl, setImageUrl] = useState(event.image);
@@ -98,7 +98,7 @@ const UpdateEventModal = ({ event }: { event: Event }) => {
 
   return (
     <>
-      <Button onClick={openModal}>Update Event</Button>
+      <Button onClick={openModal} disabled={!isApproved}>Update Event</Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>

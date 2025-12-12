@@ -23,7 +23,8 @@ const blockUser =async (updatedData:any,accountId:string) => {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
-             Cookie: `accessToken=${accessToken}`, // PERFECT way
+            //  Cookie: `accessToken=${accessToken}`, // PERFECT way
+              "Authorization": `Bearer ${accessToken}`,
             },
             credentials: "include",
               body: JSON.stringify(updatedData),
@@ -43,6 +44,7 @@ const blockUser =async (updatedData:any,accountId:string) => {
     
         return data
       } catch (error: any) {
+        console.log(error);
         return {
           success: false,
           message: error?.message || "Unexpected error occurred",

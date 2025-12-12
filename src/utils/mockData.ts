@@ -251,6 +251,8 @@ export const mockEvents: Event[] = [
     createdAt: new Date('2024-01-08'),
     updatedAt: new Date('2024-01-08'),
   },
+
+
   {
     id: 'event-4',
     hostId: 'user-8',
@@ -361,6 +363,7 @@ export const mockEvents: Event[] = [
     createdAt: new Date('2024-01-25'),
     updatedAt: new Date('2024-01-25'),
   },
+  
   {
     id: 'event-9',
     hostId: 'user-8',

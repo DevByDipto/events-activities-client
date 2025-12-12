@@ -61,8 +61,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500)); // simulate API call
     onSave(formData);
-    setIsLoading(false);
-    onClose();
+    
   };
 
   return (

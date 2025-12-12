@@ -24,7 +24,9 @@ const updateEvent = async(eventId:string,updatedData:any) => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-           Cookie: `accessToken=${accessToken}`, // PERFECT way
+          //  Cookie: `accessToken=${accessToken}`, // PERFECT way
+                 "Authorization": `Bearer ${accessToken}`,
+
           },
           credentials: "include",
             body: JSON.stringify(updatedData),
@@ -44,6 +46,7 @@ const updateEvent = async(eventId:string,updatedData:any) => {
   
       return data
     } catch (error: any) {
+      console.log(error);
       return {
         success: false,
         message: error?.message || "Unexpected error occurred",

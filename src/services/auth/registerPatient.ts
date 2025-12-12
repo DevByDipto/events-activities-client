@@ -73,14 +73,16 @@ const role = becomeHost ? "HOST" : "USER";
         })
 
        
+console.log("res.ok",res.ok);
 
     if (!res.ok) {
       // এখানেই HTTP error detect হবে
       const errorData = await res.json();
-      throw new Error(errorData.message || "Login Failed. You might have entered incorrect email or password.");
+      console.log("errorData",errorData);
+            throw new Error(errorData.message || "Login Failed. You might have entered incorrect email or password.");
     }
     
- const result = await res.json();
+    const result = await res.json();
 
         // console.log(result, "result");
 
@@ -91,12 +93,20 @@ const role = becomeHost ? "HOST" : "USER";
         return result;
 
 
-
     } catch (error:any) {
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
         console.log("error",error);
-         return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Login Failed. You might have entered incorrect email or password."}` };
+        return {
+  success: false,
+  errors: [
+    {
+      field: "server",
+      message: error.message || "Login Failed. You might have entered incorrect email or password."
+    }
+  ]
+};
+        //  return { success: false, message: error.message  || "Login Failed. You might have entered incorrect email or password." };
     }
 }

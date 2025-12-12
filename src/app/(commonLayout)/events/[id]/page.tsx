@@ -39,7 +39,7 @@ import Image from "next/image";
 
 interface EventPageProps {
   params: {
-    id: string; // dynamic id
+    id: string; // dynamic id 
   };
 }
 
@@ -73,7 +73,9 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
   let isSaved = false
   if(user.role === "USER"){
  savedEvents = await getAllSaveEvent()
- isSaved = savedEvents.some((saveEvent:any)=>saveEvent.eventId ===id)
+ console.log("savedEvents",savedEvents);
+ 
+ isSaved = savedEvents.some((saveEvent:any)=>saveEvent.event.id ===id)
   }
   
   // console.log("isSaved",isSaved);
@@ -197,7 +199,7 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
           {/* <Button variant="secondary" size="sm">
             <Share2 className="w-4 h-4" />
           </Button> */}
-{ (event.id && user.role == 'USER') && <SaveEventBtn eventId={event.id} isSaved={isSaved} role={user.role}/>}
+{ (event.id && user.role == 'USER' ) && <SaveEventBtn eventId={event.id} isSaved={isSaved} role={user.role} savedEvents={savedEvents}/>}
           
         </div>
       </div>
@@ -403,13 +405,24 @@ const EventDetailsPage = async ({ params }: EventPageProps) => {
                   </span>
                 </div>
               </div>
-
-              <EventEnrollCard
+{
+  event.isApproved ? <EventEnrollCard
                 isHost={isHost}
                 isParticipant={isParticipant}
                 event={event}
                 id={id}
-              />
+              /> 
+              :
+               <Button
+                    variant="outline"
+                    className="w-full"
+                   
+                    // isLoading={isLeaving}
+                  >
+                    Event is not approved by admin
+                  </Button>
+}
+              
        
             </div>
           

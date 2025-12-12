@@ -81,7 +81,7 @@ export function EventCard({
             </Badge>
           )}
         </div>
-        {(onSave || onUnsave) && (
+        {/* {(onSave || onUnsave) && (
           <button
             onClick={handleSaveClick}
             className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white shadow-sm transition-colors"
@@ -93,7 +93,7 @@ export function EventCard({
               <Bookmark className="w-5 h-5 text-gray-600" />
             )}
           </button>
-        )}
+        )} */}
       </div>
 
       {/* Content */}

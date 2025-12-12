@@ -12,9 +12,11 @@ const eventDetails = async (id:string) => {
  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${id}`, {
       credentials: "include",
        headers: {
-      Cookie: `accessToken=${accessToken}`,
+      // Cookie: `accessToken=${accessToken}`,
+             "Authorization": `Bearer ${accessToken}`,
+
     },
-    cache: "no-store",
+    cache: "no-store", 
     });
 
       if (!res.ok) {
@@ -27,6 +29,7 @@ const eventDetails = async (id:string) => {
     
     return data.data
   } catch (error: any) {
+    console.log(error);
      return { success: false, message: error.message };
    }
   

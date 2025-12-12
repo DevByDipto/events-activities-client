@@ -14,7 +14,7 @@ const EventFilters = ({ eventAndParticipents, reviews, user }: EventFiltersProps
   const [filter, setFilter] = useState<"UPCOMING" | "PAST">("UPCOMING");
 
   const now = new Date();
-
+ 
   const filteredEvents = eventAndParticipents?.filter((item) => {
     const eventDate = new Date(item.event?.dateTime || "");
 

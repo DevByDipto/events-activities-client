@@ -8,7 +8,9 @@ const getHostCreatedAllEvents =async () => {
    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/events/host`, {
         credentials: "include",
          headers: {
-        Cookie: `accessToken=${accessToken}`,
+        // Cookie: `accessToken=${accessToken}`,
+               "Authorization": `Bearer ${accessToken}`,
+
       },
       cache: "no-store",
       });
@@ -23,6 +25,7 @@ const getHostCreatedAllEvents =async () => {
       
       return data.data
     } catch (error: any) {
+      console.log(error);
        return { success: false, message: error.message };
      }
 }

@@ -40,8 +40,9 @@ export async function HomePage() {
 
   //   fetcEvent();
   // }, []);
-  const featuredEvents = events?.filter((e:any) => e.isFeatured && e.status === 'OPEN')
-    .slice(0, 6)
+const featuredEvents = Array.isArray(events)
+  ? events.filter((e:any) => e.isApproved && e.isFeatured).slice(0, 6)
+  : [];
 
   const topHosts = mockUsers
     .filter((u) => u.role === 'HOST' && u.rating && u.rating >= 4.5)

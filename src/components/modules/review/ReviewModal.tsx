@@ -7,13 +7,14 @@ import React, { useState } from 'react'
 import { Event, Review, User } from '@/types';
 import creatReview from '@/services/review/creatReview';
 import { toast } from 'sonner';
+import { revalidatePathFunction } from '@/services/event/eventDetails';
 const ReviewModal = ({
   event,
   reviews,
   user
 }: {
   event: Event;
-  reviews: Review[];
+  reviews: Review[]; 
   user: User;
 }) => {
      const [open, setOpen] = useState(false);
@@ -36,11 +37,13 @@ const result = await creatReview({
   eventId: event.id,
   reviewData: data
 });    
-setIsSubmit(true)
+
 // console.log(result);
 
 if(result.success){
+  await revalidatePathFunction(`/dashboard/my-events`);
     toast.success("review submite successfull")
+    setIsSubmit(false)
 }
     
     // console.log("Review submitted:", { rating, comment });
@@ -58,7 +61,7 @@ if(result.success){
     alreadyReviewed ?  <p className="text-sm font-medium text-green-600">
        Already review submit
     </p> : <Button onClick={() => openModal(event)}>Give Review</Button>
-: "Event is not available"
+: "Event is not complete"
   }
        {/* Review Modal */}
       <Dialog open={open} onOpenChange={setOpen}>

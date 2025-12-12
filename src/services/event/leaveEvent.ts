@@ -23,7 +23,9 @@ const leaveEvent = async (eventId: string) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Cookie: `accessToken=${accessToken}`, // PERFECT way
+          // Cookie: `accessToken=${accessToken}`, // PERFECT way
+                 "Authorization": `Bearer ${accessToken}`,
+
         },
         
         credentials: "include", // Cookies handled automatically
@@ -43,6 +45,7 @@ const leaveEvent = async (eventId: string) => {
 
     return data
   } catch (error: any) {
+    console.log(error);
     return {
       success: false,
       message: error?.message || "Unexpected error occurred",

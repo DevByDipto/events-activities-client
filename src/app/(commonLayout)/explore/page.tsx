@@ -10,6 +10,8 @@ import allEvents from '@/services/event/allEvents'
 
 export default function ExplorePage() {
   const [user, setUser] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
 // console.log("user",user);
 
   useEffect(() => {
@@ -22,11 +24,14 @@ export default function ExplorePage() {
   }, []);
 
   const [events, setEvent] = useState<any>(null);
+
 // console.log("events",events);
 
   useEffect(() => {
     const fetcEvent = async () => {
+      setIsLoading(true)
       const data = await allEvents();
+      setIsLoading(false)
       console.log("data",data);
       
       setEvent(data);
@@ -146,9 +151,13 @@ export default function ExplorePage() {
         </div>
 
         {/* Events Grid */}
+        {
+          isLoading && <p className='flex items-center justify-center'>loading...</p>
+        }
         {filteredEvents?.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEvents?.map((event:any) => (
+              event.isApproved &&
               <EventCard
                 key={event?.id}
                 event={event}

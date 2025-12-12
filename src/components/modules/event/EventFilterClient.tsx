@@ -64,6 +64,7 @@ const EventFilterClient = ({ events }: { events: any[] }) => {
     <th className="p-3 text-left">Date</th>
     <th className="p-3 text-left">Participants</th>
     <th className="p-3 text-left">Fee</th>
+    <th className="p-3 text-left">Is Approved</th>
     <th className="p-3 text-left">Details</th>
     <th className="p-3 text-left">Status</th> {/* new column */}
     <th className="p-3 text-left">Delete</th>
@@ -83,6 +84,7 @@ const EventFilterClient = ({ events }: { events: any[] }) => {
         {event.currentParticipants}/{event.maxParticipants}
       </td>
       <td className="p-3">${event.joiningFee}</td>
+      <td className={`p-3 ${event.isApproved ? "text-green-500":"text-red-500"}`}>{event.isApproved ? "approved":"pending"}</td>
 <td className="p-3">
         <Link href={`/events/${event.id}`}>details</Link>
       </td>
@@ -90,14 +92,20 @@ const EventFilterClient = ({ events }: { events: any[] }) => {
         <UpdateEventStatus
           eventId={event.id}
           currentStatus={event.status}
+          isApproved={event.isApproved}
         />
       </td>
       <td className="p-3">
-        <DeleteEventBtn eventID={event.id} />
+        <DeleteEventBtn eventID={event.id}
+         isApproved={event.isApproved}
+          />
+        
       </td>
 
       <td className="p-3">
-        <UpdateEventModal event={event} />
+        <UpdateEventModal event={event} 
+         isApproved={event.isApproved}
+          />
       </td>
     </tr>
   ))}

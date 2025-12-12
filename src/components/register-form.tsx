@@ -2,11 +2,12 @@
 "use client";
 
 import { registerPatient } from "@/services/auth/registerPatient";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerPatient, null);
@@ -14,8 +15,10 @@ const RegisterForm = () => {
 
   const getFieldError = (fieldName: string) => {
     if (state && state.errors) {
+      console.log("errors",state.errors);
+      
       const error = state.errors.find((err: any) => err.field === fieldName);
-      if (error) {
+      if (error) { 
         return error.message;
       } else {
         return null;
@@ -24,6 +27,12 @@ const RegisterForm = () => {
       return null;
     }
   };
+
+  useEffect(() => {
+  if (state?.errors) {
+    state.errors.forEach((err:any) => toast.error(err.message));
+  }
+}, [state]);
   return (
     <form action={formAction}> 
     {/* // aikhane Form tag er vitor j form use kora hoto seta keno hoto oi example ta to pacchi o nah (support)*/}

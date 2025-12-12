@@ -7,7 +7,8 @@ try {
      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/all-user`, {
        credentials: "include",
           headers: {
-      Cookie: `accessToken=${accessToken}`,
+      // Cookie: `accessToken=${accessToken}`,
+        "Authorization": `Bearer ${accessToken}`,
     },
      });
  
@@ -21,6 +22,7 @@ try {
      return result.data
  
    } catch (error: any) {
+    console.log(error);
      return { success: false, message: error.message };
    }
 }

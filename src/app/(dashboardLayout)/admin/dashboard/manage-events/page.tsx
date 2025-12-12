@@ -3,6 +3,7 @@
 import EventApproval from "@/components/modules/admin/EventApproval";
 import allEvents from "@/services/event/allEvents";
 import { Event } from "@/types";
+export const dynamic = 'force-dynamic'
 
 
 const EventsTable =async () => {

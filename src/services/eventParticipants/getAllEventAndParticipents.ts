@@ -7,12 +7,16 @@ const getAllEventAndParticipents =async () => {
    try {
     console.log("before cookie");
     
-     const accessToken = await getCookie('accessToken')
-      console.log("after cookie");
+     const accessToken = await getCookie('accessToken')  
+     console.log();
+     
+      console.log("after cookie"); 
      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/event-participants`, {
-       credentials: "include",
+       credentials: "include", 
           headers: {
-      Cookie: `accessToken=${accessToken}`,
+      // Cookie: `accessToken=${accessToken}`,
+             "Authorization": `Bearer ${accessToken}`,
+
     },
      });
  
@@ -27,6 +31,7 @@ const getAllEventAndParticipents =async () => {
      return result.data
  
    } catch (error: any) {
+    console.log(error);
      return { success: false, message: error.message };
    }
 }

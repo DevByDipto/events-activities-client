@@ -17,14 +17,33 @@ interface EventEnrollCardProp{
    const EventEnrollCard = ({isHost,isParticipant,event,id}:EventEnrollCardProp) => {
   const [isJoining, setIsJoining] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
+  console.log("isParticipant",isParticipant);
+  console.log("isJoining",isJoining);
+  console.log("isLeaving",isLeaving);
+  console.log("----------------------");
+  
     //   const router = useRouter();
   const handleJoin = async () => {
-    // if (!isAuthenticated) {
-    //   router.push("/login");
-    //   return;
-    // }
+   setIsLeaving(false);
     setIsJoining(true);
-    const result = await eventJoining(id as string)
+    let result;
+    try {
+       result = await eventJoining(id as string)
+       if (result.success) {
+        
+         await revalidatePathFunction(`events/${id}`)
+        
+         toast.success("Successfully joined the event!!")
+    }else{
+      toast.error("opps! can't joined the event!!")
+    }
+      
+    } catch (error) {
+      setIsJoining(false);
+      console.log(error,"from eventControllCard");
+      
+    }
+    
     // toast(`congratulation`, {
     //   // autoClose: false default হলো manual dismiss
     //   // আপনি চাইলে custom action যোগ করতে পারেন 
@@ -36,12 +55,7 @@ interface EventEnrollCardProp{
     //     },
     //   },
     // });
-    if (result.success) {
-      toast.success("Successfully joined the event!!")
-    setIsJoining(false);
-    }else{
-      toast.error("opps! can't joined the event!!")
-    }
+    
     
     // revalidatePathFunction(`events/${id}`)
     // console.log("eventJoining result",result.paymentUrl);
@@ -50,23 +64,31 @@ interface EventEnrollCardProp{
     // alert("Successfully joined the event!");
   };
 
-  useEffect(()=>{
-    async function fetchData() {
-  await revalidatePathFunction(`events/${id}`)
-    }
-    fetchData()
-  },[isJoining,isLeaving,id])
+  // useEffect(()=>{
+  //   async function fetchData() {
+  // await revalidatePathFunction(`events/${id}`)
+  //   }
+  //   fetchData()
+  // },[isJoining,isLeaving,id])
 
   const handleLeave = async () => {
-    setIsLeaving(true);
+    try {
+       setIsJoining(false);
+       setIsLeaving(true);
     const result = await leaveEvent(id)
       if (result.success) {
-      setIsLeaving(false);
-    
-    toast.success("Successfully left the event")
+      
+        await revalidatePathFunction(`events/${id}`)
+        toast.success("Successfully left the event")
+        
     }else{
       toast.error("opps! can't left the event!!")
     }
+    } catch (error) {
+      setIsJoining(false);
+      console.log(error);
+    }
+   
    
   };
      return (
@@ -80,7 +102,7 @@ interface EventEnrollCardProp{
                ( <div className="flex items-center gap-2 p-3 bg-muted rounded-lg justify-center">
                   <XCircle className="w-5 h-5 text-muted-foreground" />
                   <span className="text-muted-foreground font-medium">
-                    Event is not available
+                    Event is not available,event is {event.status.toLowerCase()}
                     {/* {event.status === "FULL"
                       ? "Event is full"
                       : event.status === "COMPLETED" ?"Event is COMPLETED" : "Event is not available"} */}

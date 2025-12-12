@@ -6,9 +6,10 @@ import { revalidatePathFunction } from "@/services/event/eventDetails";
 
 interface DeleteEventBtnProps {
   eventID: string;
+  isApproved:boolean
 }
 
-const DeleteEventBtn: React.FC<DeleteEventBtnProps> = ({ eventID }) => {
+const DeleteEventBtn: React.FC<DeleteEventBtnProps> = ({ eventID,isApproved }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,7 +39,7 @@ const DeleteEventBtn: React.FC<DeleteEventBtnProps> = ({ eventID }) => {
       <button
         onClick={() => setIsModalOpen(true)}
         className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:opacity-50 transition"
-        disabled={isDeleting}
+        disabled={isDeleting || !isApproved}
       >
         {isDeleting ? "Deleting..." : "Delete Event"}
       </button>

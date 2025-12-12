@@ -8,7 +8,9 @@ const getSinglePayments =async (userId:string,eventId:string,) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payments?userId=${userId}&eventId=${eventId}`, {
        credentials: "include",
         headers: {
-       Cookie: `accessToken=${accessToken}`,
+      //  Cookie: `accessToken=${accessToken}`,
+             "Authorization": `Bearer ${accessToken}`,
+
      },
      cache: "no-store",
      });
@@ -23,6 +25,7 @@ const getSinglePayments =async (userId:string,eventId:string,) => {
      
      return data.data
    } catch (error: any) {
+    console.log(error);
       return { success: false, message: error.message };
     }
 }

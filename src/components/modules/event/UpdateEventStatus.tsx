@@ -7,11 +7,13 @@ import { toast } from "sonner";
 interface UpdateEventStatusProps {
   eventId: string;
   currentStatus: "OPEN" | "FULL" | "COMPLETED";
+  isApproved:boolean
 }
 
 const UpdateEventStatus: React.FC<UpdateEventStatusProps> = ({
   eventId,
   currentStatus,
+  isApproved,
 }) => {
   const [status, setStatus] = useState(currentStatus);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -43,7 +45,7 @@ const UpdateEventStatus: React.FC<UpdateEventStatusProps> = ({
     <select
       value={status}
       onChange={handleChange}
-      disabled={isUpdating}
+      disabled={isUpdating || !isApproved}
       className="border px-2 py-1 rounded"
     >
       <option value="OPEN">OPEN</option>

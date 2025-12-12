@@ -7,7 +7,8 @@ const getAllHost = async() => {
        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/all-hosts`, {
          credentials: "include",
             headers: {
-        Cookie: `accessToken=${accessToken}`,
+        // Cookie: `accessToken=${accessToken}`,
+          "Authorization": `Bearer ${accessToken}`,
       },
        });
    
@@ -21,6 +22,7 @@ const getAllHost = async() => {
        return result.data
    
      } catch (error: any) {
+      console.log(error);
        return { success: false, message: error.message };
      }
 }

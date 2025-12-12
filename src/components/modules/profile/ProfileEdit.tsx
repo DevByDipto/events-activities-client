@@ -6,6 +6,7 @@ import { revalidatePathFunction } from '@/services/event/eventDetails'
 import updateUserProfile from '@/services/user/updateUserProfile'
 import { User } from '@/types'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 interface ProfileEditProp{
   isOwnProfile:boolean,currentUser:any
@@ -15,7 +16,7 @@ const ProfileEdit = ({isOwnProfile,currentUser}:ProfileEditProp) => {
        const [isLoading, setIsLoading] = useState(false);
         useEffect(()=>{
           async function fetchData() {
-        await revalidatePathFunction(`my-profile`)
+        await revalidatePathFunction(`/my-profile`)
           }
           fetchData()
         },[isLoading])
@@ -26,6 +27,16 @@ const ProfileEdit = ({isOwnProfile,currentUser}:ProfileEditProp) => {
         // console.log(updates);
         
       const result = await updateUserProfile(updates)
+      if (result.success) {
+        toast.success("profile update success full")
+        await revalidatePathFunction(`/my-profile`)
+        setIsLoading(false);
+    setIsEditModalOpen(false)
+      }else{
+        setIsLoading(false);
+    setIsEditModalOpen(false)
+      }
+       
       console.log("result",result);
       
     }

@@ -20,12 +20,13 @@ const approveEvent =async (eventId:string,updatedData:any) => {
          // English: Sending API request with eventId  
      
          const response = await fetch(
-           `${process.env.NEXT_PUBLIC_BACKEND_URL}/event/${eventId}/approve`,
+           `${process.env.NEXT_PUBLIC_BACKEND_URL}/admins/event/${eventId}/approve`,
            {
              method: "PATCH",
              headers: {
                "Content-Type": "application/json",
-              Cookie: `accessToken=${accessToken}`, // PERFECT way
+              // Cookie: `accessToken=${accessToken}`, // PERFECT way
+                "Authorization": `Bearer ${accessToken}`,
              },
              credentials: "include",
                body: JSON.stringify(updatedData),
@@ -45,6 +46,8 @@ const approveEvent =async (eventId:string,updatedData:any) => {
      
          return data
        } catch (error: any) {
+        console.log(error);
+        
          return {
            success: false,
            message: error?.message || "Unexpected error occurred",

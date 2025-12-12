@@ -19,6 +19,7 @@ const allEvents = async () => {
      return event.data
  
    } catch (error: any) {
+    console.log(error);
      return { success: false, message: error.message };
    }
 }
