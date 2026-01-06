@@ -1,4 +1,4 @@
-# 🛡️ BimaBondhu — Life Insurance Management Platform
+#  EventHub — EventHub Management Platform
 
 EventHub is a full end-to-end event booking platform where hosts can create and manage events, and users can browse, book, and review events seamlessly. The client side is built using Next.js and Tailwind CSS to deliver a fast, responsive, and modern user experience across devices. The application follows a complete workflow from event creation to user booking, payment, and reviews. An admin panel provides full control over events, bookings, and users to ensure smooth system management.
 
