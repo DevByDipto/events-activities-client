@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛡️ BimaBondhu — Life Insurance Management Platform
 
-## Getting Started
+EventHub is a full end-to-end event booking platform where hosts can create and manage events, and users can browse, book, and review events seamlessly. The client side is built using Next.js and Tailwind CSS to deliver a fast, responsive, and modern user experience across devices. The application follows a complete workflow from event creation to user booking, payment, and reviews. An admin panel provides full control over events, bookings, and users to ensure smooth system management.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!-- <img src="https://i.ibb.co.com/W4PBbjjV/Screenshot-2025-08-09-225322.png" alt="BimaBondhu" width="700"/> -->
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Live Project
+**Frontend (Live)**: [https://bimabondu.web.app](https://event-hub-client-ivory.vercel.app)  
+**Backend Repository**: [BimaBondhu Server Repo](https://github.com/DevByDipto/Events-Activities-server)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Admin Credentials
+- email: admin@gmail.com
+- pass: 123456
+### Host Credentials
+- email: host@gmail.com
+- pass: 123456
+### User Credentials
+- email: user@gmail.com
+- pass: 123456
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠 Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **Frontend**
+- Nest.js
+- Tailwind CSS
+- Zod
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### **Backend**
+- Node.js, Express.js
+- Postgresql (Atlas)
+- prisma
+- Stripe Payment Integration
+- JWT for API authentication
+- Multer or Cloudinary/ImgBB for image upload
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
