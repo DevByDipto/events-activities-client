@@ -7,8 +7,8 @@ EventHub is a full end-to-end event booking platform where hosts can create and 
 ---
 
 ## 🌐 Live Project
-**Frontend (Live)**: [https://bimabondu.web.app](https://event-hub-client-ivory.vercel.app)  
-**Backend Repository**: [BimaBondhu Server Repo](https://github.com/DevByDipto/Events-Activities-server)
+**Frontend (Live)**: [EventHub live linek](https://event-hub-client-ivory.vercel.app)  
+**Backend Repository**: [EventHub Server Repo](https://github.com/DevByDipto/Events-Activities-server)
 
 ---
 
